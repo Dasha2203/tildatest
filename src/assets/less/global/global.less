@@ -1,6 +1,7 @@
 * {
 	outline: none!important;
 	text-decoration: none;
+	box-sizing: border-box;
 }
 
 img {
@@ -15,6 +16,7 @@ svg {
 
 body {
 	background-color: rgb(240, 240, 240);
+	font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -84,133 +86,4 @@ body {
 
 @media(max-width: 767px) {
 	
-}
-
-.fade {
-	opacity: 0;
-	-webkit-transition: opacity 0.15s linear;
-	-o-transition: opacity 0.15s linear;
-	transition: opacity 0.15s linear;
-}
-
-.fade.show,
-.fade.in {
-	opacity: 1;
-}
-
-.collapse {
-	display: none;
-}
-
-.collapse.show {
-	display: block;
-}
-
-tr.collapse.show {
-	display: table-row;
-}
-
-tbody.collapse.show {
-	display: table-row-group;
-}
-
-.collapsing {
-	position: relative;
-	height: 0;
-	overflow: hidden;
-	-webkit-transition-property: height, visibility;
-	-o-transition-property: height, visibility;
-	transition-property: height, visibility;
-	-webkit-transition-duration: 0.35s;
-	-o-transition-duration: 0.35s;
-	transition-duration: 0.35s;
-	-webkit-transition-timing-function: ease;
-	-o-transition-timing-function: ease;
-	transition-timing-function: ease;
-}
-
-.tab-content .tab-pane {
-	display: none
-}
-
-.tab-content .tab-pane.active {
-	display: block
-}
-
-.background-video,
-.background-img {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	z-index: 0;
-	background-color: transparent;
-	.bg-img;	
-	overflow: hidden;
-
-	img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		min-width: 100%;
-		min-height: 100%;
-		max-width: none;
-		color: transparent;
-
-		@supports(object-fit: cover) or (-o-object-fit: cover) {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-
-		@supports(transform: translate(0, 0)) or (-webkit-transform: translate(0, 0)) {
-			top: 50%;
-			left: 50%;
-			transform: translateX(-50%) translateY(-50%);
-		}
-	}
-
-	video {
-		position: absolute;
-		top: 0;
-		left: 0;
-		min-width: 100%;
-		min-height: 100%;
-		width: auto;
-		height: auto;
-
-		@supports(transform: translate(0, 0)) or (-webkit-transform: translate(0, 0)) {
-			top: 50%;
-			left: 50%;
-			transform: translateX(-50%) translateY(-50%);
-		}
-	}
-}
-
-.video-responsive {
-	position: relative;
-	padding-bottom: 56.25%;
-	display: block;
-	height: 0;
-	overflow: hidden;
-}
-
-.video-responsive iframe, 
-.video-responsive object, 
-.video-responsive embed,
-.video-responsive video {
-	position: absolute; 
-	top: 0; 
-	left: 0; 
-	min-width: 100%;
-	min-height: 100%;
-	width: auto;
-	height: auto;
-
-	@supports(transform: translate(0, 0)) or (-webkit-transform: translate(0, 0)) {
-		top: 50%;
-		left: 50%;
-		transform: translateX(-50%) translateY(-50%);
-	}
 }

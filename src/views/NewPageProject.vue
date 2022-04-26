@@ -9,7 +9,3 @@ export default {
   name: "NewPageProject.vue"
 }
 </script>
-
-<style scoped>
-
-</style>

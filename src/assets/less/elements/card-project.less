@@ -1,10 +1,8 @@
 .card-project {
-  padding: 30px 40px 0 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  max-width: 460px;
   height: 265px;
   background-color: #fff;
   border: 1px solid #d9d9d9;
@@ -18,8 +16,23 @@
   }
 
   .card-project__footer {
-    padding-top: 30px;
-    padding-bottom: 30px;
+    position: relative;
+    padding: 27px 40px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      display: block;
+      height: 1px;
+      width: calc(100% - 80px);
+      transform: translateX(-50%);
+      background-color: #e5e5e5;
+    }
   }
 
   .card-project__title {
@@ -32,6 +45,7 @@
   }
 
   a {
+    padding: 30px 40px 0 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

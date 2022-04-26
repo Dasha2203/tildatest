@@ -2,16 +2,17 @@
 
 @color-white: #ffffff;
 @color-black: #000000;
+@color-black-light: #333;
 @color-gray: #4A545E;
 @color-gray-light: #F4F4F4;
-@color-red: #DD1E35;
-
-@color-main: @color-gray;
+@color-orange: #fa886e;
+@color-red: red;
+@color-main: @color-black;
 @color-second: @color-white;
 
 
 .transitions(@for: all) {
-	transition: @for ease-in-out .3s;
+	transition: @for ease-in-out .2s;
 }
 
 .color-style (@color, @background-color) {
@@ -25,7 +26,3 @@
 	background-size: @size;
 }
 
-.height-100vh {
-	height: ~"calc(100vh - 0)";
-	height: ~"calc((var(--vh, 1vh) * 100) - 0)";
-}

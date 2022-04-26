@@ -11,7 +11,3 @@ export default {
   name: "Project"
 }
 </script>
-
-<style scoped>
-
-</style>

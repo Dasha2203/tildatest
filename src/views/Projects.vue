@@ -1,24 +1,19 @@
 <template>
-  <div class="page">
+  <div class="page projects">
     <div class="container">
-      <h1 @click="getStore">My Projects</h1>
-      <div class="wrap">
-        <CardProject
-            v-for="project in projectsComp"
-            :project="project"
-            v-bind:key="project.id"
-        />
-      </div>
+        <ProjectWrap v-for="projectType in projectsComp" :projects-data="projectType"/>
     </div>
   </div>
 </template>
 
 <script>
 import CardProject from "@/components/CardProject";
+import ProjectWrap from "@/components/Projects/ProjectWrap";
 
 export default {
   name: "Projects",
   components: {
+    ProjectWrap,
     CardProject
   },
   methods: {
@@ -36,18 +31,10 @@ export default {
   },
   computed: {
     projectsComp() {
+      console.log('comp data', this.$store.getters.getProjects)
       return this.$store.getters.getProjects
     }
   }
 
 }
 </script>
-
-<style scoped>
-.wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-</style>

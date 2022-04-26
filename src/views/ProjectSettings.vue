@@ -9,7 +9,3 @@ export default {
   name: "ProjectSettings"
 }
 </script>
-
-<style scoped>
-
-</style>
