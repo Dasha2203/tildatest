@@ -1,0 +1,31 @@
+@main-font: 'Gilroy', Open Sans, Arial, sans-serif;
+
+@color-white: #ffffff;
+@color-black: #000000;
+@color-gray: #4A545E;
+@color-gray-light: #F4F4F4;
+@color-red: #DD1E35;
+
+@color-main: @color-gray;
+@color-second: @color-white;
+
+
+.transitions(@for: all) {
+	transition: @for ease-in-out .3s;
+}
+
+.color-style (@color, @background-color) {
+	color: @color;
+	background-color: @background-color;
+}
+
+.bg-img (@position: 50% 50%, @size: cover) {
+	background-position: @position;
+	background-repeat: no-repeat;
+	background-size: @size;
+}
+
+.height-100vh {
+	height: ~"calc(100vh - 0)";
+	height: ~"calc((var(--vh, 1vh) * 100) - 0)";
+}

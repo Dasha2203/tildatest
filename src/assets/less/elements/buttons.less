@@ -1,0 +1,35 @@
+.button {
+    display: inline-block;
+    padding: 0.85em 2.25em;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #fff;
+    color: @color-main;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 100%;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+
+    &_icon {
+
+    }
+
+    &_default {
+        &:hover {
+            background-color: #FAFAFA;
+        }
+        &:focus,
+        &:active {
+            background-color: #F7F7F7;
+        }
+    }
+
+    &_full-width {
+        width: 100%;
+    }
+}
