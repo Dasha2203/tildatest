@@ -19,20 +19,19 @@ export default {
   methods: {
     getStore() {
       // let l = this.$store.getters.getProjects()
-      console.log(this.$store.getters.getProjects)
-      return this.$store.getters.getProjects
+      // console.log(this.$store.getters.getProjects)
+      // return this.$store.getters.getProjects
     }
 
   },
-  data() {
-    return {
-      projects: this.getStore
-    }
+  mounted() {
+    this.$store.dispatch('fetchAllProjects')
   },
   computed: {
     projectsComp() {
-      console.log('comp data', this.$store.getters.getProjects)
-      return this.$store.getters.getProjects
+      // console.log('comp data', this.$store.getters.getProjects)
+      // console.log('json',JSON.stringify(this.$store.getters.getProjects));
+      return this.$store.getters.getAllProjects
     }
   }
 
