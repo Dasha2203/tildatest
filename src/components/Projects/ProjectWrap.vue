@@ -2,9 +2,9 @@
   <div class="projects-wrap">
     <div class="projects-wrap__header">
       <div class="projects-wrap__title">
-        {{ projectsData.title }}:
+        {{ type.title }}:
       </div>
-      <div class="btn-with-icon" @click="handleAddProject(projectsData.id)">
+      <div class="btn-with-icon" >
         <div class="icon">
           <svg width="15px" class="td-sites-uppanel__rightbtn-plus" style="display:block; width:15px;"
                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -20,8 +20,13 @@
       </div>
     </div>
     <div class="projects-wrap__body">
-      <div class="project-wrap__item"  v-for="(project, idx) in projectsData.projects" v-bind:key="idx">
-        <CardProject :project="project"/>
+      <div
+          class="project-wrap__item"
+          v-for="(project, idx) in getAllProjects"
+
+          :key="idx"
+      >
+        <CardProject v-if="project && (project.type === type.type)" :project="project"/>
       </div>
     </div>
   </div>
@@ -29,11 +34,12 @@
 
 <script>
 import CardProject from "@/components/CardProject";
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations, mapState} from "vuex";
+
 export default {
   name: "ProjectWrap",
   props: {
-    projectsData: {
+    type: {
       type: Object
     }
   },
@@ -42,13 +48,13 @@ export default {
       title: 'My project',
     }
   },
-  components: {CardProject},
+  computed: mapGetters(['getAllProjects']),
+  components: { CardProject },
   methods: {
-    ...mapMutations(['addNewProject']),
+    ...mapMutations(['ADD_NEW_PROJECT']),
 
     handleAddProject(id) {
-      this.addNewProject(id)
-
+      this.ADD_NEW_PROJECT(id)
     }
   }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="page projects">
     <div class="container">
-        <ProjectWrap v-for="projectType in projectsComp" :projects-data="projectType"/>
+      <ProjectWrap v-for="projectType in getTypeProjects" :type="projectType"/>
     </div>
   </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 import CardProject from "@/components/CardProject";
 import ProjectWrap from "@/components/Projects/ProjectWrap";
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: "Projects",
@@ -16,24 +17,11 @@ export default {
     ProjectWrap,
     CardProject
   },
-  methods: {
-    getStore() {
-      // let l = this.$store.getters.getProjects()
-      // console.log(this.$store.getters.getProjects)
-      // return this.$store.getters.getProjects
-    }
-
-  },
   mounted() {
     this.$store.dispatch('fetchAllProjects')
   },
-  computed: {
-    projectsComp() {
-      // console.log('comp data', this.$store.getters.getProjects)
-      // console.log('json',JSON.stringify(this.$store.getters.getProjects));
-      return this.$store.getters.getAllProjects
-    }
-  }
+  computed: mapGetters(['getTypeProjects']),
+
 
 }
 </script>
