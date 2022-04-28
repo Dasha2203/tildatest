@@ -11,7 +11,7 @@ export default createRouter({
     routes: [
         {
             path: '/',
-            component: Home
+            redirect: '/projects'
         },
         {
             path: '/projects',

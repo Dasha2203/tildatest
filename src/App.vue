@@ -1,8 +1,7 @@
 <template>
-  <div class="dasha">
+  <div @click="handleClick">
     <Header/>
     <router-view/>
-
   </div>
 </template>
 
@@ -10,6 +9,7 @@
 import TodoList from "@/components/Todo/TodoList";
 import AddTodo from "@/components/Todo/AddTodo";
 import Header from "@/components/Header";
+import {mapActions, mapGetters} from "vuex";
 export default {
   name: 'App',
   components: {
@@ -17,16 +17,16 @@ export default {
     AddTodo,
     Header
   },
+  computed: {
+    ...mapGetters(['getOpenProjectOptions'])
+  },
+  methods: {
+    ...mapActions(['changeOpenProjectOptions']),
+    handleClick() {
+      if (this.getOpenProjectOptions) {
+        this.changeOpenProjectOptions({id: null})
+      }
+    }
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /*margin-top: 60px;*/
-}
-</style>

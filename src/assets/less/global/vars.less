@@ -1,7 +1,9 @@
 @main-font: 'Gilroy', Open Sans, Arial, sans-serif;
 
 @color-white: #ffffff;
+@color-dark-white: #f0f0f0;
 @color-black: #000000;
+@color-black-opacity: rgba(0, 0, 0, .4);
 @color-black-light: #333;
 @color-gray: #4A545E;
 @color-gray-light: #F4F4F4;
@@ -10,9 +12,11 @@
 @color-main: @color-black;
 @color-second: @color-white;
 
+//break-point
+@break-point-tab: 768px;
 
 .transitions(@for: all) {
-	transition: @for ease-in-out .2s;
+	transition: @for .1s ease;
 }
 
 .color-style (@color, @background-color) {

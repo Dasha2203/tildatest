@@ -4,7 +4,7 @@
       <div class="projects-wrap__title">
         {{ type.title }}:
       </div>
-      <div class="btn-with-icon" >
+      <div class="btn-with-icon" @click="handleAddProject(type.type)">
         <div class="icon">
           <svg width="15px" class="td-sites-uppanel__rightbtn-plus" style="display:block; width:15px;"
                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -19,22 +19,27 @@
         </span>
       </div>
     </div>
-    <div class="projects-wrap__body">
+    <div class="projects-wrap__body" v-if="getTypeProjects(type.type).length">
       <div
           class="project-wrap__item"
-          v-for="(project, idx) in getAllProjects"
-
-          :key="idx"
+          v-for="(project, idx) in getTypeProjects(type.type)"
+          :key="project.id"
       >
-        <CardProject v-if="project && (project.type === type.type)" :project="project"/>
+        <CardProject
+            :project="project"
+            :indexProject="idx"
+        />
       </div>
+    </div>
+    <div class="projects-wrap__body" v-else>
+      У вас нет сайтов
     </div>
   </div>
 </template>
 
 <script>
 import CardProject from "@/components/CardProject";
-import {mapGetters, mapMutations, mapState} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ProjectWrap",
@@ -43,18 +48,23 @@ export default {
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       title: 'My project',
     }
   },
-  computed: mapGetters(['getAllProjects']),
-  components: { CardProject },
+  computed: {
+    ...mapGetters(['getAllProjects', 'getTypeProjects'])
+  },
+  components: {CardProject},
   methods: {
-    ...mapMutations(['ADD_NEW_PROJECT']),
+    ...mapActions(['addNewProject']),
 
-    handleAddProject(id) {
-      this.ADD_NEW_PROJECT(id)
+    handleAddProject(typeId) {
+      this.addNewProject({
+          title: this.title,
+          type: typeId
+      });
     }
   }
 

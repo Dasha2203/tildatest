@@ -1,0 +1,39 @@
+.options__list {
+  padding: 20px 20px 15px 20px;
+  position: absolute;
+  right: 100%;
+  top: 0;
+  min-width: 200px;
+  background-color: @color-white;
+  box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+  z-index: 1000;
+
+  @media (min-width: @break-point-tab) {
+    right: auto;
+    left: 100%;
+  }
+
+  &__title {
+    color: @color-black-opacity;
+    margin-bottom: 5px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  &__item {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 6px 20px;
+    background-color: @color-white;
+    font-size: 14px;
+    color: @color-main;
+    .transitions(all);
+
+    &:hover {
+      background-color: @color-dark-white;
+      color: @color-orange;
+    }
+  }
+}

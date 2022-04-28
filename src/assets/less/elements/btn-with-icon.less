@@ -18,17 +18,21 @@
     border-radius: 50%;
   }
 
-  .btn-with-icon__text {
-    font-size: 18px;
+  &__text {
+    font-size: 14px;
     font-weight: 300;
     line-height: 1.428571429;
     color: #333;
     transition: all .2s ease;
+
+    @media (min-width: @break-point-tab) {
+      font-size: 18px;
+    }
   }
 
   &:hover {
     .btn-with-icon__text {
-      color: #fa886e;
+      color: @color-orange;
     }
   }
 }

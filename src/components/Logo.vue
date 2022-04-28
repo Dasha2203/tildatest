@@ -7,17 +7,12 @@
         <path style="fill:#fff;" d="M35,70A35,35,0,1,1,70,35,35,35,0,0,1,35,70ZM35,2.26A32.74,32.74,0,1,0,67.74,35,32.78,32.78,0,0,0,35,2.26Z"></path>
       </g>
     </svg>
-<!--    <LogoIcon/>-->
   </router-link>
 </template>
 
 <script>
 
-// import LogoIcon from "../assets/images/icon/logo.svg"
 export default {
   name: "Logo",
-  components: {
-    // LogoIcon
-  }
 }
 </script>

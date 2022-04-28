@@ -1,26 +1,32 @@
 .card-project {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 265px;
-  background-color: #fff;
+  height: 205px;
+  background-color: @color-white;
   border: 1px solid #d9d9d9;
   transition: all .2s ease;
+
   &:hover {
     background-color: #eee;
   }
 
-  .card-project__header {
-
+  @media (min-width: @break-point-tab) {
+    height: 265px;
   }
 
-  .card-project__footer {
+  &__footer {
     position: relative;
-    padding: 27px 40px 26px;
+    padding: 7px 20px 6px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .link-project {
+      display: none;
+    }
 
     &::before {
       content: "";
@@ -33,31 +39,74 @@
       transform: translateX(-50%);
       background-color: #e5e5e5;
     }
+
+    @media (min-width: @break-point-tab) {
+      padding: 27px 40px 26px;
+
+      .link-project {
+        display: flex;
+      }
+    }
   }
 
-  .card-project__title {
-    font-size: 52px;
+  &__options {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+
+    svg {
+      g {
+        fill: @color-gray;
+        .transitions();
+      }
+    }
+
+    &:hover {
+      svg {
+        g {
+          fill: @color-orange;
+        }
+      }
+    }
+  }
+
+  &__title {
+    max-width: 90%;
+    font-size: 34px;
     line-height: 54px;
     font-weight: 300;
-    color: #000;
+    color: @color-black;
     transition: all .2s ease-in-out;
     text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    @media (min-width: @break-point-tab) {
+      font-size: 52px;
+    }
   }
 
   a {
-    padding: 30px 40px 0 40px;
+    padding: 10px 20px 0 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
     flex: 1 1 auto;
-    //height: 100%;
     cursor: pointer;
 
     &:hover {
-      .card-project__title {
-        color: #f4846b;
+      &__title {
+        color: @color-orange;
       }
+    }
+
+    @media (min-width: @break-point-tab) {
+      padding: 30px 40px 0 40px;
     }
   }
 }

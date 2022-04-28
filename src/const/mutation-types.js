@@ -1,1 +1,8 @@
+// Mutation projects
+
+export const UPDATE_PROJECTS = 'UPDATE_PROJECTS';
+export const GENERATE_PROJECTS_TYPES = 'GENERATE_PROJECTS_TYPES';
 export const ADD_NEW_PROJECT = 'ADD_NEW_PROJECT';
+export const REMOVE_PROJECT = 'REMOVE_PROJECT';
+export const CHANGE_OPEN_OPTIONS = 'CHANGE_OPEN_OPTIONS';
+// OTHER mutation types

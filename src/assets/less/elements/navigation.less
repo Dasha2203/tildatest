@@ -5,10 +5,10 @@
   .navigation-link {
     padding-top: 14px;
     padding-bottom: 14px;
-    /*height: 57px;*/
     display: flex;
     align-items: center;
-    color: #fff;
+    width: max-content;
+    color: @color-white;
     font-size: 16px;
     font-weight: 600;
     text-decoration: none;
@@ -20,12 +20,12 @@
     }
 
     &.router-link-active {
-      border-bottom: 3px solid #f4846b;
+      border-bottom: 3px solid @color-orange;
     }
 
     &:hover {
-      color: #f4846b;
-      border-bottom: 3px solid #f4846b;
+      color: @color-orange;
+      border-bottom: 3px solid @color-orange;
     }
   }
 }

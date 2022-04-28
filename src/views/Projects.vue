@@ -1,27 +1,33 @@
 <template>
   <div class="page projects">
     <div class="container">
-      <ProjectWrap v-for="projectType in getTypeProjects" :type="projectType"/>
+      <ProjectWrap
+
+          v-for="projectType in getProjectsTypes"
+          :key="projectType.type"
+          :type="projectType"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import CardProject from "@/components/CardProject";
-import ProjectWrap from "@/components/Projects/ProjectWrap";
-import { mapState, mapGetters } from 'vuex'
+  import CardProject from "@/components/CardProject";
+  import ProjectWrap from "@/components/Projects/ProjectWrap";
+  import { mapGetters, mapActions } from 'vuex';
 
-export default {
-  name: "Projects",
-  components: {
-    ProjectWrap,
-    CardProject
-  },
-  mounted() {
-    this.$store.dispatch('fetchAllProjects')
-  },
-  computed: mapGetters(['getTypeProjects']),
-
-
-}
+  export default {
+    name: "Projects",
+    components: {
+      ProjectWrap,
+      CardProject
+    },
+    methods: mapActions(['fetchAllProjects']),
+    computed: mapGetters(['getProjectsTypes', 'getAllProjects']),
+    mounted() {
+      document.cookie = "user=Dasha";
+      console.log('cookie Dasha', document.cookie)
+      this.fetchAllProjects();
+    },
+  }
 </script>
