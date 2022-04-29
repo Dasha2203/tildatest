@@ -8,12 +8,12 @@ node_modules
 .env.*.local
 
 # components
-/src/views/Hove.vue
-/src/views/EditProject.vue
-/src/views/NewPageProject.vue
-/src/views/ProjectSettings.vue
-/src/components/ProgectSettings
-/src/components/SideBar.vue
+src/views/Hove.vue
+src/views/EditProject.vue
+src/views/NewPageProject.vue
+src/views/ProjectSettings.vue
+src/components/ProgectSettings
+src/components/SideBar.vue
 
 
 # Log files

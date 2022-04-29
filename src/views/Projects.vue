@@ -2,7 +2,6 @@
   <div class="page projects">
     <div class="container">
       <ProjectWrap
-
           v-for="projectType in getProjectsTypes"
           :key="projectType.type"
           :type="projectType"
@@ -26,7 +25,6 @@
     computed: mapGetters(['getProjectsTypes', 'getAllProjects']),
     mounted() {
       document.cookie = "user=Dasha";
-      console.log('cookie Dasha', document.cookie)
       this.fetchAllProjects();
     },
   }

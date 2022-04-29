@@ -17,6 +17,8 @@
     height: 265px;
   }
 
+
+
   &__footer {
     position: relative;
     padding: 7px 20px 6px;
@@ -26,6 +28,10 @@
 
     .link-project {
       display: none;
+    }
+
+    .btn-with-icon__text {
+      font-size: 12px;
     }
 
     &::before {
@@ -42,7 +48,9 @@
 
     @media (min-width: @break-point-tab) {
       padding: 27px 40px 26px;
+    }
 
+    @media (min-width: 960px) {
       .link-project {
         display: flex;
       }
