@@ -4,7 +4,7 @@
       <div class="projects-wrap__title">
         {{ type.title }}:
       </div>
-      <div class="btn-with-icon" @click="handleAddProject(type.type)">
+      <div class="btn-with-icon" @click="handleAddProject(type.type, type.title)">
         <div class="icon">
           <svg width="15px" class="td-sites-uppanel__rightbtn-plus" style="display:block; width:15px;"
                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -60,9 +60,9 @@ export default {
   methods: {
     ...mapActions(['addNewProject']),
 
-    handleAddProject(typeId) {
+    handleAddProject(typeId,typeTitle) {
       this.addNewProject({
-          title: this.title,
+          title: typeTitle,
           type: typeId
       });
     }

@@ -57,12 +57,21 @@ export default {
                             }
                         })
 
+                        //generate other section
                         let findIndex = projectsTypes.findIndex(item => item.title === 'Коммерческие сайты');
                         if (findIndex === -1) {
                             projectsTypes.push({
                                 type: Date.now(),
                                 title: 'Коммерческие сайты'
                             });
+                        }
+
+                        findIndex = projectsTypes.findIndex(item => item.title === 'Мои сайты');
+                        if (findIndex === -1) {
+                            projectsTypes = [{
+                                type: Date.now(),
+                                title: 'Мои сайты'
+                            }, ...projectsTypes]
                         }
 
                         commit(types.UPDATE_PROJECTS, data);
@@ -78,13 +87,13 @@ export default {
             }
 
         },
-        addNewProject({commit, state}, payload) {
+        addNewProject({commit, state, getters}, payload) {
             const idProject = Date.now();
             let generateProject = {
                 id: idProject,
                 type: payload.type,
                 typeTitle: state.projectTypes.find(type => type.type === payload.type).title,
-                title: `${payload.title} ${state.projectsData.length + 1}`,
+                title: `${payload.title} ${getters.getTypeProjects(payload.type).length + 1}`,
                 link: `/project/${idProject}`
             };
             let updateProjectsCookie = JSON.stringify([...state.projectsData, generateProject]);
