@@ -1,6 +1,8 @@
 <template>
   <div class="page">
-    <h1>Settings page</h1>
+    <div class="container">
+      <h1>Settings page {{$route.params.id}}</h1>
+    </div>
   </div>
 </template>
 

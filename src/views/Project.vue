@@ -146,20 +146,23 @@ export default {
   },
   data() {
     return {
-      project: {},
+      idProject: +routers.currentRoute.value.params.id,
       openModal: false,
       openDomainModal: false,
       inputError: '',
-      newTitle: '',
+      newTitle: ``,
       domain: ''
     }
+  },
+  computed: {
+    ...mapGetters(['getPagesByIdProject', 'getProjectById'])
   },
   methods: {
     ...mapActions(['addNewPageToProject', 'removePage']),
     closeModal() {
       this.inputError = '';
       this.domain = '';
-      this.newTitle = this.project.title;
+      this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`;
       this.openModal = false
     },
     handleChangeTitle(value) {
@@ -193,8 +196,8 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(['getPagesByIdProject', 'getProjectsTypes', 'getProjectById'])
-  }
+  mounted() {
+    this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`
+  },
 }
 </script>

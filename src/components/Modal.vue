@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Input from "@/components/Input";
+
 export default {
-  name: "Modal",
-  components: {Input}
+  name: "Modal"
 }
+
 </script>

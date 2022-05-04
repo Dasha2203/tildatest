@@ -39,7 +39,6 @@
     <Modal
         v-if="openCreateProjectModal"
         @closeModal="closeModal"
-        :title="'fllflf'"
     >
       <div class="modal__title">
         Введите название сайта
@@ -106,9 +105,12 @@ export default {
     },
     closeModal() {
       this.inputError = '';
-      this.newTitle = this.type.title;
+      this.newTitle = `${this.type.title} ${this.getTypeProjects(this.type.type).length + 1}`
       this.openCreateProjectModal = false
     }
+  },
+  mounted() {
+    this.newTitle = `${this.type.title} ${this.getTypeProjects(this.type.type).length + 1}`
   }
 
 }

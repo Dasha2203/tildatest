@@ -11,17 +11,14 @@
 </template>
 
 <script>
-  import CardProject from "@/components/CardProject";
   import ProjectWrap from "@/components/Projects/ProjectWrap";
-  import { mapGetters, mapActions } from 'vuex';
+  import { mapGetters } from 'vuex';
 
   export default {
     name: "Projects",
     components: {
-      ProjectWrap,
-      CardProject
+      ProjectWrap
     },
-    methods: mapActions(['fetchAllProjects']),
     computed: mapGetters(['getProjectsTypes']),
 
   }

@@ -1,5 +1,4 @@
 <template>
-  <div class="icon-symbols">
     <svg xmlns="http://www.w3.org/2000/svg">
       <symbol id="plus" viewBox="0 0 30 30">
         <g>
@@ -46,8 +45,17 @@
       <symbol id="requests" viewBox="0 0 40 28">
         <path class="st0" d="M9 .9H5v5H0v4h5v5h4v-5h5v-4H9zM16 5.9h24v4H16zM16 13.9h24v4H16zM16 21.9h24v4H16z"></path>
       </symbol>
+
+      <symbol id="options" viewBox="0 0 24 24">
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Artboard" fill="#000000" fill-rule="nonzero">
+            <path
+                d="M11.75,18 C12.7164983,18 13.5,18.7835017 13.5,19.75 C13.5,20.7164983 12.7164983,21.5 11.75,21.5 C10.7835017,21.5 10,20.7164983 10,19.75 C10,18.7835017 10.7835017,18 11.75,18 Z M11.75,10.5 C12.7164983,10.5 13.5,11.2835017 13.5,12.25 C13.5,13.2164983 12.7164983,14 11.75,14 C10.7835017,14 10,13.2164983 10,12.25 C10,11.2835017 10.7835017,10.5 11.75,10.5 Z M11.75,3 C12.7164983,3 13.5,3.78350169 13.5,4.75 C13.5,5.71649831 12.7164983,6.5 11.75,6.5 C10.7835017,6.5 10,5.71649831 10,4.75 C10,3.78350169 10.7835017,3 11.75,3 Z"
+                id="Shape"/>
+          </g>
+        </g>
+      </symbol>
     </svg>
-  </div>
 </template>
 
 <script>

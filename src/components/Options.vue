@@ -9,7 +9,7 @@
     </div>
     <div
         class="options__item"
-        @click="$emit('removeproject')"
+        @click="$emit('removeProject')"
     >
       Удалить
     </div>
