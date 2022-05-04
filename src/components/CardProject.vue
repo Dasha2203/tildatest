@@ -14,8 +14,8 @@
       <Options
           :title="'Настройки сайта'"
           @removeproject="removeProjectById"
+          @changeNameProject="openChangeNameModal = true"
           v-if="!!getOpenProjectOptions && getOpenProjectOptions === project.id"
-
       />
     </div>
     <router-link class="card-project__link" :to="project.link">
@@ -60,29 +60,83 @@
         </span>
       </div>
     </div>
+
+    <!--    Modal change title project-->
+    <Modal
+        v-if="openChangeNameModal"
+        @closeModal="closeModal"
+        :title="'fllflf'"
+    >
+      <div class="modal__title">
+        Введите название сайта
+      </div>
+      <Input
+          :title="newTitle"
+          :autofocus="true"
+          :error="inputError"
+          @changeTitle="handleChangeTitle"
+      />
+      <button
+          type="button"
+          class="button button-orange"
+          @click="saveNewTitleProject"
+      >
+        Сохранить
+      </button>
+    </Modal>
   </div>
 </template>
 
 <script>
 import Options from "@/components/Options";
 import {mapActions, mapGetters} from "vuex";
+import Modal from "@/components/Modal";
+import Input from "@/components/Input";
 
 export default {
   name: "CardProject",
   components: {
+    Input,
+    Modal,
     Options
+  },
+  data() {
+    return {
+      openChangeNameModal: false,
+      inputError: '',
+      newTitle: this.project.title
+    }
   },
   computed: {
     ...mapGetters(['getOpenProjectOptions'])
   },
   methods: {
-    ...mapActions(['removeProject', 'changeOpenProjectOptions']),
+    ...mapActions(['removeProject', 'changeOpenProjectOptions', 'changeNameProject']),
     removeProjectById() {
       this.removeProject({id: this.project.id})
     },
     openOptions() {
       this.changeOpenProjectOptions({id: this.project.id})
+    },
+    saveNewTitleProject() {
+
+      if (this.newTitle.trim()) {
+        this.changeNameProject({ id: this.project.id, newName: this.newTitle })
+        this.openChangeNameModal = false;
+      } else {
+        this.inputError='Введите название сайта'
+      }
+    },
+    handleChangeTitle(value) {
+      this.newTitle = value;
+    },
+    closeModal() {
+      this.inputError = '';
+      this.newTitle = this.project.title;
+      this.openChangeNameModal = false
     }
+
+
   },
   props: {
     project: {

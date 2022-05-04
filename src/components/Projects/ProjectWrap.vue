@@ -4,7 +4,7 @@
       <div class="projects-wrap__title">
         {{ type.title }}:
       </div>
-      <div class="btn-with-icon" @click="handleAddProject(type.type, type.title)">
+      <div class="btn-with-icon" @click="openCreateProjectModal = true">
         <div class="icon">
           <svg width="15px" class="td-sites-uppanel__rightbtn-plus" style="display:block; width:15px;"
                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
@@ -34,12 +34,38 @@
     <div class="projects-wrap__body" v-else>
       У вас нет сайтов
     </div>
+
+    <!--    Modal to create project-->
+    <Modal
+        v-if="openCreateProjectModal"
+        @closeModal="closeModal"
+        :title="'fllflf'"
+    >
+      <div class="modal__title">
+        Введите название сайта
+      </div>
+      <Input
+          :title="newTitle"
+          :autofocus="true"
+          :error="inputError"
+          @changeTitle="handleChangeTitle"
+      />
+      <button
+          type="button"
+          class="button button-orange"
+          @click="() => handleAddProject(type.type)"
+      >
+        Создать
+      </button>
+    </Modal>
   </div>
 </template>
 
 <script>
 import CardProject from "@/components/CardProject";
 import { mapActions, mapGetters } from "vuex";
+import Modal from "@/components/Modal";
+import Input from "@/components/Input";
 
 export default {
   name: "ProjectWrap",
@@ -51,20 +77,37 @@ export default {
   data() {
     return {
       title: 'My project',
+      openCreateProjectModal: false,
+      inputError: '',
+      newTitle: `${this.type.title}`
+
     }
   },
   computed: {
     ...mapGetters(['getAllProjects', 'getTypeProjects'])
   },
-  components: {CardProject},
+  components: {Input, Modal, CardProject},
   methods: {
     ...mapActions(['addNewProject']),
-
-    handleAddProject(typeId,typeTitle) {
-      this.addNewProject({
-          title: typeTitle,
+    ...mapGetters({methodGetTypeProjects:"getTypeProjects"}),
+    handleChangeTitle(value) {
+      this.newTitle = value;
+    },
+    handleAddProject(typeId) {
+      if (this.newTitle.trim()) {
+        this.addNewProject({
+          title: this.newTitle,
           type: typeId
-      });
+        });
+        this.closeModal();
+      } else {
+        this.inputError='Введите название сайта'
+      }
+    },
+    closeModal() {
+      this.inputError = '';
+      this.newTitle = this.type.title;
+      this.openCreateProjectModal = false
     }
   }
 

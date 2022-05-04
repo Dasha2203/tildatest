@@ -12,7 +12,7 @@ export default {
         async fetchAllProjects({commit}) {
             let projectsTypes = [];
 
-            function generateTypes () {
+            function generateTypes() {
                 projectsTypes = [
                     {
                         type: Date.now(),
@@ -67,6 +67,7 @@ export default {
                         }
 
                         findIndex = projectsTypes.findIndex(item => item.title === 'Мои сайты');
+
                         if (findIndex === -1) {
                             projectsTypes = [{
                                 type: Date.now(),
@@ -87,27 +88,42 @@ export default {
             }
 
         },
+
         addNewProject({commit, state, getters}, payload) {
+            console.log('action add ', payload)
             const idProject = Date.now();
             let generateProject = {
                 id: idProject,
                 type: payload.type,
                 typeTitle: state.projectTypes.find(type => type.type === payload.type).title,
-                title: `${payload.title} ${getters.getTypeProjects(payload.type).length + 1}`,
+                title: `${payload.title}`,
                 link: `/project/${idProject}`
             };
             let updateProjectsCookie = JSON.stringify([...state.projectsData, generateProject]);
-            document.cookie = `projects=${updateProjectsCookie}`;
+            document.cookie = `projects=${updateProjectsCookie}; path=/;`;
             commit(types.ADD_NEW_PROJECT, {generateProject});
         },
+
+        addNewPageToProject({ commit }, payload) {
+            commit(types.ADD_PAGE, payload)
+        },
+
+        removePage({ commit }, payload) {
+            commit(types.REMOVE_PAGE, payload)
+        },
+
         removeProject({commit, state}, payload) {
             let updateProjects = state.projectsData.filter(project => project.id !== payload.id);
-            document.cookie = `projects=${JSON.stringify(updateProjects)}`
+            document.cookie = `projects=${JSON.stringify(updateProjects)}; path=/;`
             commit(types.REMOVE_PROJECT, {projects: updateProjects})
         },
 
         changeOpenProjectOptions({commit}, payload) {
             commit(types.CHANGE_OPEN_OPTIONS, payload);
+        },
+
+        changeNameProject({commit}, payload) {
+            commit(types.CHANGE_NAME_PROJECT, payload);
         }
     },
     mutations: {
@@ -125,6 +141,28 @@ export default {
 
         },
 
+        [types.ADD_PAGE](state, payload) {
+            let indexProject = state.projectsData.findIndex(i => i.id === payload.id)
+            if (indexProject !== -1) {
+                if ( 'pages' in state.projectsData[indexProject]) {
+                    state.projectsData[indexProject].pages.push({id: Date.now(), title: payload.newName})
+                } else {
+                    state.projectsData[indexProject].pages = [{id: Date.now(), title: payload.newName}]
+                }
+                document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
+            }
+        },
+
+        [types.REMOVE_PAGE](state, payload) {
+            let indexProject = state.projectsData.findIndex(i => i.id === payload.idProject);
+            if (indexProject !== -1) {
+                // let indexPage = state.projectsData[indexProject].pages.findIndex(page => page.id === payload.idPage);
+                state.projectsData[indexProject].pages = state.projectsData[indexProject].pages.filter(page => page.id !== payload.idPage);
+                document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
+            }
+
+        },
+
         [types.REMOVE_PROJECT](state, payload) {
             state.projectsData = payload.projects
 
@@ -132,12 +170,26 @@ export default {
 
         [types.CHANGE_OPEN_OPTIONS](state, payload) {
             state.openProjectOptions = payload.id;
+        },
+
+        [types.CHANGE_NAME_PROJECT](state, payload) {
+            let indexProject = state.projectsData.findIndex(i => i.id === payload.id);
+
+            if (indexProject !== -1) {
+                state.projectsData[indexProject].title = payload.newName;
+                document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
+            }
         }
     },
 
     getters: {
         getAllProjects(state) {
             return state.projectsData
+        },
+
+        getProjectById: (state) => (id) => {
+            return state.projectsData.find(project => project.id === id)
+
         },
 
         // Get types of projects
@@ -152,6 +204,11 @@ export default {
 
         getOpenProjectOptions(state) {
             return state.openProjectOptions
+        },
+
+        getPagesByIdProject: (state) => (id)  => {
+            let project = state.projectsData.find(i => i.id === id)
+            return 'pages' in project ? state.projectsData.find(i => i.id === id).pages : []
         }
     }
 }

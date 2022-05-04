@@ -3,7 +3,13 @@
     <div class="options__title">{{ title }}</div>
     <div
         class="options__item"
-        v-on:click="$emit('removeproject')"
+        @click="$emit('changeNameProject')"
+    >
+      Изменить название
+    </div>
+    <div
+        class="options__item"
+        @click="$emit('removeproject')"
     >
       Удалить
     </div>

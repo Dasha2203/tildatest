@@ -22,10 +22,7 @@
       CardProject
     },
     methods: mapActions(['fetchAllProjects']),
-    computed: mapGetters(['getProjectsTypes', 'getAllProjects']),
-    mounted() {
-      document.cookie = "user=Dasha";
-      this.fetchAllProjects();
-    },
+    computed: mapGetters(['getProjectsTypes']),
+
   }
 </script>

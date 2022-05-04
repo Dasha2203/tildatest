@@ -1,0 +1,36 @@
+.input {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+
+  &.input-error {
+    input {
+      border: 1px solid red;
+    }
+  }
+
+  input {
+    position: relative;
+    padding: 12px 25px;
+    width: 100%;
+    border-radius: 6px;
+    background-color: @color-white;
+    border: 1px solid @color-gray;
+    font-size: 24px;
+    z-index: 2;
+  }
+
+  .input__text-error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+    color: red;
+    transition: all .3s ease;
+    z-index: 1;
+
+    &-show {
+      top: calc(100% + 5px);
+    }
+  }
+}
