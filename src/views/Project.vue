@@ -114,7 +114,7 @@
         Введите имя домена
       </div>
       <Input
-          :title="newTitle"
+          :title="domain"
           :autofocus="true"
           :error="inputError"
           @changeTitle="handleChangeDomain"
