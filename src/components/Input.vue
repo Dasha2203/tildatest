@@ -1,11 +1,13 @@
 <template>
   <div :class="`input ${error ? 'input-error' : ''}`">
+    <label v-if="!!label">{{label}}</label>
     <input
         type="text"
+        :name="name"
         :autofocus="autofocus"
         :value="title"
-        @input="$emit('changeTitle', $event.target.value)"
-        placeholder="Введите текст"
+        :placeholder=" placeholder || 'Введите текст'"
+        @input="$emit('changeInput', $event)"
     />
     <div
         :class="`input__text-error ${error ? `input__text-error-show` : null}`"
@@ -19,16 +21,6 @@
 
 export default {
   name: "Input",
-  props: {
-    title: {
-      type: String
-    },
-    autofocus: {
-      type: Boolean
-    },
-    error: {
-      type: String
-    }
-  }
+  props:  ['title','autofocus', 'error', 'placeholder', 'label', 'name']
 }
 </script>

@@ -40,29 +40,33 @@
         v-if="openCreateProjectModal"
         @closeModal="closeModal"
     >
-      <div class="modal__title">
-        Введите название сайта
-      </div>
-      <Input
-          :title="newTitle"
-          :autofocus="true"
-          :error="inputError"
-          @changeTitle="handleChangeTitle"
-      />
-      <button
-          type="button"
-          class="button button-orange"
-          @click="() => handleAddProject(type.type)"
-      >
-        Создать
-      </button>
+      <template v-slot:header>
+        <div class="modal__title">
+          Введите название сайта
+        </div>
+      </template>
+      <template v-slot:body>
+        <Input
+            :title="newTitle"
+            :autofocus="true"
+            :error="inputError"
+            @changeTitle="handleChangeTitle"
+        />
+        <button
+            type="button"
+            class="button button-orange"
+            @click="() => handleAddProject(type.type)"
+        >
+          Создать
+        </button>
+      </template>
     </Modal>
   </div>
 </template>
 
 <script>
 import CardProject from "@/components/CardProject";
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import Modal from "@/components/Modal";
 import Input from "@/components/Input";
 
@@ -88,7 +92,7 @@ export default {
   components: {Input, Modal, CardProject},
   methods: {
     ...mapActions(['addNewProject']),
-    ...mapGetters({methodGetTypeProjects:"getTypeProjects"}),
+    ...mapGetters({methodGetTypeProjects: "getTypeProjects"}),
     handleChangeTitle(value) {
       this.newTitle = value;
     },
@@ -100,7 +104,7 @@ export default {
         });
         this.closeModal();
       } else {
-        this.inputError='Введите название сайта'
+        this.inputError = 'Введите название сайта'
       }
     },
     closeModal() {

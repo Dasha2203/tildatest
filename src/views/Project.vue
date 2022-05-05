@@ -46,6 +46,7 @@
               <span class="btn-with-icon__text">
                 Заявки
               </span>
+              https://project_{{+$route.params.id}}
             </div>
           </div>
         </div>
@@ -95,7 +96,7 @@
           :title="newTitle"
           :autofocus="true"
           :error="inputError"
-          @changeTitle="handleChangeTitle"
+          @changeInput="handleChangeTitle"
       />
       <button
           type="button"
@@ -111,22 +112,26 @@
         v-if="openModal === 'domain'"
         @closeModal="closeModal"
     >
-      <div class="modal__title">
-        Введите имя домена
-      </div>
-      <Input
-          :title="domain"
-          :autofocus="true"
-          :error="inputError"
-          @changeTitle="handleChangeDomain"
-      />
-      <button
-          type="button"
-          class="button button-orange"
-          @click="checkDomain"
-      >
-        Сохранить
-      </button>
+      <template v-slot:header>
+        <div class="modal__title">
+          Введите имя домена
+        </div>
+      </template>
+      <template v-slot:body>
+        <Input
+            :title="domain"
+            :autofocus="true"
+            :error="inputError"
+            @changeTitle="handleChangeDomain"
+        />
+        <button
+            type="button"
+            class="button button-orange"
+            @click="checkDomain"
+        >
+          Сохранить
+        </button>
+      </template>
     </Modal>
   </div>
 </template>
@@ -188,7 +193,7 @@ export default {
     },
     checkDomain() {
       let regularExpression = /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
-      if(this.domain.match(regularExpression)) {
+      if (this.domain.match(regularExpression)) {
         this.closeModal()
       } else if (!this.domain.trim()) {
         this.inputError = 'Введите домен';

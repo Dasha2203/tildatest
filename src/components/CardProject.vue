@@ -59,22 +59,26 @@
         v-if="openChangeNameModal"
         @closeModal="closeModal"
     >
-      <div class="modal__title">
-        Введите название сайта
-      </div>
-      <Input
-          :title="newTitle"
-          :autofocus="true"
-          :error="inputError"
-          @changeTitle="handleChangeTitle"
-      />
-      <button
-          type="button"
-          class="button button-orange"
-          @click="saveNewTitleProject"
-      >
-        Сохранить
-      </button>
+      <template v-slot:header>
+        <div class="modal__title">
+          Введите название сайта
+        </div>
+      </template>
+      <template v-slot:body>
+        <Input
+            :title="newTitle"
+            :autofocus="true"
+            :error="inputError"
+            @changeTitle="handleChangeTitle"
+        />
+        <button
+            type="button"
+            class="button button-orange"
+            @click="saveNewTitleProject"
+        >
+          Сохранить
+        </button>
+      </template>
     </Modal>
   </div>
 </template>
@@ -123,10 +127,10 @@ export default {
     saveNewTitleProject() {
 
       if (this.newTitle.trim()) {
-        this.changeNameProject({ id: this.project.id, newName: this.newTitle })
+        this.changeNameProject({id: this.project.id, newName: this.newTitle})
         this.openChangeNameModal = false;
       } else {
-        this.inputError='Введите название сайта'
+        this.inputError = 'Введите название сайта'
       }
     },
     handleChangeTitle(value) {

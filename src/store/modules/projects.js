@@ -127,7 +127,16 @@ export default {
 
         changeNameProject({commit}, payload) {
             commit(types.CHANGE_NAME_PROJECT, payload);
+        },
+
+        setSettingsPage({commit}, payload) {
+            commit(types.SET_SETTINGS_PAGE, payload)
+        },
+
+        setImgPage({commit}, payload) {
+            commit(types.SET_IMG_PAGE, payload);
         }
+
     },
     mutations: {
 
@@ -182,6 +191,47 @@ export default {
                 state.projectsData[indexProject].title = payload.newName;
                 document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
             }
+        },
+
+        [types.SET_SETTINGS_PAGE](state, payload) {
+            let findProject;
+            let indexPage;
+            state.projectsData.forEach((project, index) => {
+                if (project.pages) {
+                    indexPage = project.pages.findIndex(page => page.id ===  payload.id)
+                    if ( indexPage !== -1 ) {
+                        findProject = index
+
+                    }
+                }
+            })
+
+            state.projectsData[findProject].pages[indexPage] = {
+                ...state.projectsData[findProject].pages[indexPage],
+                title: payload.title,
+                description: payload.description
+            }
+            document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
+        },
+
+        [types.SET_IMG_PAGE](state, payload) {
+            let findProject;
+            let indexPage;
+            state.projectsData.forEach((project, index) => {
+                if (project.pages) {
+                    indexPage = project.pages.findIndex(page => page.id ===  payload.id)
+                    if ( indexPage !== -1 ) {
+                        findProject = index
+
+                    }
+                }
+            })
+
+            state.projectsData[findProject].pages[indexPage] = {
+                ...state.projectsData[findProject].pages[indexPage],
+                srcImg: payload.srcImg
+            }
+            document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
         }
     },
 
@@ -223,7 +273,20 @@ export default {
             })
 
             return findPage
+        },
+        getLinkPage: (state) => (id) => {
+            let findProject;
+            state.projectsData.forEach(project => {
+                if (project.pages) {
+                    let page = project.pages.find(page => page.id === id)
+                    if ( page) {
+                        findProject = project
+                    }
 
+                }
+            })
+
+            return `https://project_${findProject.id}/page_${id}`
         }
     }
 }

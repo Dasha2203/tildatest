@@ -1,14 +1,17 @@
 .modal {
+  padding-top: 40px;
+  padding-bottom: 40px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   display: flex;
-  align-items: center;
+  //align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, .5);
   z-index: 10000;
+  overflow-y: auto;
 
   .modal__header {
     padding: 50px 50px 0;
@@ -17,7 +20,33 @@
   }
 
   .modal__body {
-    padding: 10px 50px;
+    padding: 25px 50px;
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .paragraph {
+      text-align: center;
+    }
+
+    .img {
+      width: 100%;
+      max-width: 600px;
+      max-height: 800px;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        //height: 100%;
+        object-fit: cover;
+      }
+    }
+
   }
 
   .modal__footer {
@@ -75,6 +104,7 @@
     max-width: 1100px;
     min-height: 30%;
     background-color: @color-white;
+    height: min-content;
 
     @media (min-width: @break-point-s) {
       margin-left: 20px;
