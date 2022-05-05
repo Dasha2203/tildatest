@@ -1,0 +1,23 @@
+.tab-navigation {
+  display: flex;
+  align-items: center;
+
+  .tab-navigation__item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: 300;
+    color: @color-black;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .3s ease;
+
+    &-active {
+      border-bottom: 2px solid @color-black;
+    }
+
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+}

@@ -77,6 +77,7 @@
         <ListPageItem
             v-for="page in getPagesByIdProject(+$route.params.id)"
             :page="page"
+            :key="page.id"
             @remove="removeSelectPage"
         />
       </div>
@@ -194,7 +195,8 @@ export default {
       } else {
         this.inputError = 'Невалидный домен';
       }
-    }
+    },
+
   },
   mounted() {
     this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`

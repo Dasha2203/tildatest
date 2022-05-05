@@ -10,6 +10,43 @@
   background-color: rgba(0, 0, 0, .5);
   z-index: 10000;
 
+  .modal__header {
+    padding: 50px 50px 0;
+    background: #f7f7f7;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .modal__body {
+    padding: 10px 50px;
+  }
+
+  .modal__footer {
+    padding: 0 50px 50px;
+    display: flex;
+
+    & > a {
+      align-self: flex-end;
+      font-size: 14px;
+      color: @color-black;
+      transition: all .3s ease;
+
+      &:hover {
+        color: @color-orange
+      }
+    }
+
+    .buttons {
+      margin-left: auto;
+      display: flex;
+
+      .button {
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
   .modal__title {
     font-size: 26px;
     text-align: center;
@@ -31,7 +68,6 @@
   .modal__container {
     margin-left: 10px;
     margin-right: 10px;
-    padding: 50px;
     position: relative;
     display: flex;
     flex-direction: column;
