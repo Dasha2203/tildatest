@@ -192,7 +192,6 @@ export default {
 
         getProjectById: (state) => (id) => {
             return state.projectsData.find(project => project.id === id)
-
         },
 
         // Get types of projects
@@ -212,6 +211,19 @@ export default {
         getPagesByIdProject: (state) => (id)  => {
             let project = state.projectsData.find(i => i.id === id)
             return 'pages' in project ? state.projectsData.find(i => i.id === id).pages : []
+        },
+
+        getPageById: (state) => (id) => {
+            let findPage;
+            state.projectsData.forEach(project => {
+                if (project.pages) {
+                    findPage = project.pages.find(page => page.id === id)
+
+                }
+            })
+
+            return findPage
+
         }
     }
 }

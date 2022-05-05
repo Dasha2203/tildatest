@@ -1,10 +1,20 @@
 <template>
+  <div
+      :class="`sidebar ${active ? 'sidebar-active' : ''}`"
+      @click.self="$emit('close')"
+  >
 
+  </div>
 </template>
 
 <script>
 export default {
-  name: "SideBar"
+  name: "SideBar",
+  props: {
+    active: {
+      type: Boolean
+    }
+  }
 }
 </script>
 

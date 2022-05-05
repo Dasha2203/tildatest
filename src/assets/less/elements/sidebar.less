@@ -1,0 +1,15 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 10000;
+  transform: translateX(-100%);
+  transition: all .3s ease;
+
+  &-active {
+    transform: translateX(0);
+  }
+}
