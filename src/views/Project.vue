@@ -178,9 +178,6 @@ export default {
     handleChangeInput(event) {
       this[event.target.name] = event.target.value
     },
-    handleChangeTitle(event) {
-      this.newTitle = event.target.value;
-    },
     handleAddPage() {
       if (this.newTitle.trim()) {
         this.addNewPageToProject({
