@@ -1,17 +1,16 @@
 import * as types from "@/const/mutation-types";
-import project from "@/views/Project";
 
 export default {
     state: {
         projectTypes: [],
         projectsData: [],
-        openProjectOptions: null
+        openProjectOptions: null,
+        pageImages: []
     },
 
     actions: {
         async fetchAllProjects({commit}) {
             let projectsTypes = [];
-
             // if cookie not enabled
             if (navigator.cookieEnabled === false) {
                 try {
@@ -92,8 +91,7 @@ export default {
             }
         },
 
-        addNewProject({commit, state, getters}, payload) {
-            console.log('action add ', payload)
+        addNewProject({commit, state}, payload) {
             const idProject = Date.now();
             let generateProject = {
                 id: idProject,
@@ -107,11 +105,11 @@ export default {
             commit(types.ADD_NEW_PROJECT, {generateProject});
         },
 
-        addNewPageToProject({ commit }, payload) {
+        addNewPageToProject({commit}, payload) {
             commit(types.ADD_PAGE, payload)
         },
 
-        removePage({ commit }, payload) {
+        removePage({commit}, payload) {
             commit(types.REMOVE_PAGE, payload)
         },
 
@@ -156,7 +154,7 @@ export default {
         [types.ADD_PAGE](state, payload) {
             let indexProject = state.projectsData.findIndex(i => i.id === payload.id)
             if (indexProject !== -1) {
-                if ( 'pages' in state.projectsData[indexProject]) {
+                if ('pages' in state.projectsData[indexProject]) {
                     state.projectsData[indexProject].pages.push({id: Date.now(), title: payload.newName})
                 } else {
                     state.projectsData[indexProject].pages = [{id: Date.now(), title: payload.newName}]
@@ -198,8 +196,8 @@ export default {
             let indexPage;
             state.projectsData.forEach((project, index) => {
                 if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id ===  payload.id)
-                    if ( indexPage !== -1 ) {
+                    indexPage = project.pages.findIndex(page => page.id === payload.id)
+                    if (indexPage !== -1) {
                         findProject = index
 
                     }
@@ -219,8 +217,8 @@ export default {
             let indexPage;
             state.projectsData.forEach((project, index) => {
                 if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id ===  payload.id)
-                    if ( indexPage !== -1 ) {
+                    indexPage = project.pages.findIndex(page => page.id === payload.id)
+                    if (indexPage !== -1) {
                         findProject = index
 
                     }
@@ -231,6 +229,7 @@ export default {
                 ...state.projectsData[findProject].pages[indexPage],
                 srcImg: payload.srcImg
             }
+
             document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
         }
     },
@@ -258,7 +257,7 @@ export default {
             return state.openProjectOptions
         },
 
-        getPagesByIdProject: (state) => (id)  => {
+        getPagesByIdProject: (state) => (id) => {
             let project = state.projectsData.find(i => i.id === id)
             return 'pages' in project ? state.projectsData.find(i => i.id === id).pages : []
         },
@@ -279,7 +278,7 @@ export default {
             state.projectsData.forEach(project => {
                 if (project.pages) {
                     let page = project.pages.find(page => page.id === id)
-                    if ( page) {
+                    if (page) {
                         findProject = project
                     }
 

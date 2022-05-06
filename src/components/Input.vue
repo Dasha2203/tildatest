@@ -7,6 +7,7 @@
         :autofocus="autofocus"
         :value="title"
         :placeholder=" placeholder || 'Введите текст'"
+        :disabled="disabled"
         @input="$emit('changeInput', $event)"
     />
     <div
@@ -21,6 +22,6 @@
 
 export default {
   name: "Input",
-  props:  ['title','autofocus', 'error', 'placeholder', 'label', 'name']
+  props:  ['title','autofocus', 'error', 'placeholder', 'label', 'name', 'disabled']
 }
 </script>

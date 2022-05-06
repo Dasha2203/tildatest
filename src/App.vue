@@ -16,9 +16,7 @@ export default {
     Symbols,
     Header
   },
-  computed: {
-    ...mapGetters(['getOpenProjectOptions'])
-  },
+  computed: mapGetters(['getOpenProjectOptions']),
   methods: {
     ...mapActions(['changeOpenProjectOptions', 'fetchAllProjects']),
     handleClick() {

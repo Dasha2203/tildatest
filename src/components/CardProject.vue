@@ -69,7 +69,7 @@
             :title="newTitle"
             :autofocus="true"
             :error="inputError"
-            @changeTitle="handleChangeTitle"
+            @changeInput="handleChangeTitle"
         />
         <button
             type="button"
@@ -133,8 +133,8 @@ export default {
         this.inputError = 'Введите название сайта'
       }
     },
-    handleChangeTitle(value) {
-      this.newTitle = value;
+    handleChangeTitle(event) {
+      this.newTitle = event.target.value;
     },
     closeModal() {
       this.inputError = '';

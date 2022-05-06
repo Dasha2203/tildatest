@@ -3,13 +3,15 @@
     <router-link class="navigation-link" :to="`/project/settings/page/${page.id}`">
       <div class="list-page__img">
         <img
-            :src="page.srcImg ? page.srcImg : require('@/assets/images/page-img.jpeg')"
+            :src="page.srcImg || require('@/assets/images/pages/page-img.jpeg')"
             alt="page image">
       </div>
     </router-link>
-    <div class="list-page__title">
-      {{ page.title }}
-    </div>
+    <router-link class="navigation-link" :to="`/project/settings/page/${page.id}`">
+      <div class="list-page__title">
+        {{ page.title }}
+      </div>
+    </router-link>
     <div class="list-page__buttons">
       <button
           type="button"
@@ -78,6 +80,7 @@
               :autofocus="true"
               :error="''"
               :label="'Адрес страницы'"
+              :disabled="true"
           />
         </div>
         <div v-show="activeSettingsTab === settingsTabs[1]">
@@ -86,19 +89,20 @@
             По умолчанию для бейджика используется первая картинка из папки assets. Вы можете загрузить ваше собственное
             изображение.
           </div>
-          <label for="file-upload" class="custom-file-upload">
-            Custom Upload
-          </label>
-          <input id="file-upload" class="custom-file-upload-input" accept="image/png, image/gif, image/jpeg"
-                 @change="previewFiles" type="file"/>
+          <div class="wrap-images">
+            <div
+                :class="`img__item ${activeImg === img.src ? 'img__item-active' : ''}`"
+                v-for="img in allImages"
+                :key="img.id"
+                @click="activeImg = img.src"
+            >
+              <img :src="img.src" alt=""/>
+            </div>
+
+          </div>
+
           <div class="img">
-            <img v-if="this.imgUrl"
-                 :src="imgUrl"
-                 alt="page image">
-            <img
-                v-else
-                :src="page.srcImg ? page.srcImg : require('@/assets/images/page-img.jpeg')"
-                alt="page image">
+            <img :src="activeImg" alt="">
           </div>
         </div>
 
@@ -154,10 +158,11 @@ export default {
   },
   data() {
     return {
+      allImages: [],
       openSettingsPageModal: false,
       settingsTabs: ['Главное', 'Бейджик'],
       activeSettingsTab: 'Главное',
-      imgUrl: '',
+      activeImg: '',
       selectPage: {
         name: this.page.title,
         description: this.page.description || '',
@@ -190,13 +195,19 @@ export default {
         this.selectPage.errorName = 'Введите название страницы'
       }
     },
-    previewFiles(event) {
-      this.imgUrl = URL.createObjectURL(event.target.files[0])
-    },
+
     saveImg() {
-      this.setImgPage({srcImg: this.imgUrl, id: this.page.id,})
+      this.setImgPage({
+        srcImg: this.activeImg,
+        id: this.page.id
+      })
       this.openSettingsPageModal = false;
     }
+  },
+  mounted() {
+    let data = require('@/data/images.json');
+    this.allImages = data;
+    this.activeImg = data[0].src
   }
 }
 </script>

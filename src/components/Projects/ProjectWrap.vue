@@ -50,7 +50,7 @@
             :title="newTitle"
             :autofocus="true"
             :error="inputError"
-            @changeTitle="handleChangeTitle"
+            @changeInput="handleChangeTitle"
         />
         <button
             type="button"
@@ -93,8 +93,8 @@ export default {
   methods: {
     ...mapActions(['addNewProject']),
     ...mapGetters({methodGetTypeProjects: "getTypeProjects"}),
-    handleChangeTitle(value) {
-      this.newTitle = value;
+    handleChangeTitle(event) {
+      this.newTitle = event.target.value;
     },
     handleAddProject(typeId) {
       if (this.newTitle.trim()) {

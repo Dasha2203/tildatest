@@ -44,9 +44,9 @@
                 </svg>
               </div>
               <span class="btn-with-icon__text">
-                Заявки
+                Заявки https://project_{{ +$route.params.id }}
               </span>
-              https://project_{{+$route.params.id}}
+
             </div>
           </div>
         </div>
@@ -60,11 +60,9 @@
                 type="button"
                 @click="openModal = 'create'"
             >
-              <div class="icon">
-                <svg class="icon">
-                  <use xlink:href="#plus"></use>
-                </svg>
-              </div>
+              <svg class="icon">
+                <use xlink:href="#plus"></use>
+              </svg>
               Создать страницу
             </button>
           </div>
@@ -89,22 +87,27 @@
         v-if="openModal === 'create'"
         @closeModal="closeModal"
     >
-      <div class="modal__title">
-        Введите название страницы
-      </div>
-      <Input
-          :title="newTitle"
-          :autofocus="true"
-          :error="inputError"
-          @changeInput="handleChangeTitle"
-      />
-      <button
-          type="button"
-          class="button button-orange"
-          @click="handleAddPage"
-      >
-        Создать
-      </button>
+      <template v-slot:header>
+        <div class="modal__title">
+          Введите название страницы
+        </div>
+      </template>
+      <template v-slot:body>
+        <Input
+            :title="newTitle"
+            :name="'newTitle'"
+            :autofocus="true"
+            :error="inputError"
+            @changeInput="handleChangeInput"
+        />
+        <button
+            type="button"
+            class="button button-orange"
+            @click="handleAddPage"
+        >
+          Создать
+        </button>
+      </template>
     </Modal>
 
     <!--    Modal domain page-->
@@ -120,9 +123,10 @@
       <template v-slot:body>
         <Input
             :title="domain"
+            :name="'domain'"
             :autofocus="true"
             :error="inputError"
-            @changeTitle="handleChangeDomain"
+            @changeInput="handleChangeInput"
         />
         <button
             type="button"
@@ -171,11 +175,11 @@ export default {
       this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`;
       this.openModal = false
     },
-    handleChangeTitle(value) {
-      this.newTitle = value;
+    handleChangeInput(event) {
+      this[event.target.name] = event.target.value
     },
-    handleChangeDomain(value) {
-      this.domain = value;
+    handleChangeTitle(event) {
+      this.newTitle = event.target.value;
     },
     handleAddPage() {
       if (this.newTitle.trim()) {
@@ -189,7 +193,10 @@ export default {
       }
     },
     removeSelectPage(idPage) {
-      this.removePage({idPage, idProject: this.getProjectById(+routers.currentRoute.value.params.id).id})
+      this.removePage({
+        idPage,
+        idProject: this.getProjectById(+routers.currentRoute.value.params.id).id
+      })
     },
     checkDomain() {
       let regularExpression = /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
@@ -201,7 +208,6 @@ export default {
         this.inputError = 'Невалидный домен';
       }
     },
-
   },
   mounted() {
     this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`
