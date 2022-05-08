@@ -144,8 +144,8 @@
 import {mapActions, mapGetters} from "vuex";
 import routers from "@/routers";
 import ListPageItem from "@/components/Project/ListPageItem";
-import Modal from "@/components/Modal";
-import Input from "@/components/Input";
+import Modal from "@/components/global/Modal";
+import Input from "@/components/global/Input";
 
 export default {
   name: "Project",

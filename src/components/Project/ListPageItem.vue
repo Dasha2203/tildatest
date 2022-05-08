@@ -142,9 +142,9 @@
 
 <script>
 
-import Modal from "@/components/Modal";
-import TabNavigation from "@/components/TabNavigation";
-import Input from "@/components/Input";
+import Modal from "@/components/global/Modal";
+import TabNavigation from "@/components/global/TabNavigation";
+import Input from "@/components/global/Input";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

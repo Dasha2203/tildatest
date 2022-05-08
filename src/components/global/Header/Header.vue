@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
+import Navigation from "@/components/global/Header/Navigation";
 
 export default {
   name: "Header",

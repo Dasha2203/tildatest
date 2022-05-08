@@ -84,10 +84,10 @@
 </template>
 
 <script>
-import Options from "@/components/Options";
+import Options from "@/components/Project/Options";
 import {mapActions, mapGetters} from "vuex";
-import Modal from "@/components/Modal";
-import Input from "@/components/Input";
+import Modal from "@/components/global/Modal";
+import Input from "@/components/global/Input";
 
 export default {
   name: "CardProject",

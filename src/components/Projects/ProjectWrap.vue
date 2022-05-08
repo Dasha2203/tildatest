@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import CardProject from "@/components/CardProject";
+import CardProject from "@/components/Project/CardProject";
 import {mapActions, mapGetters} from "vuex";
-import Modal from "@/components/Modal";
-import Input from "@/components/Input";
+import Modal from "@/components/global/Modal";
+import Input from "@/components/global/Input";
 
 export default {
   name: "ProjectWrap",

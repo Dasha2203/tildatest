@@ -26,7 +26,7 @@
 
 <script>
 import {mapGetters} from "vuex";
-import SideBar from "@/components/SideBar";
+import SideBar from "@/components/ProgectSettings/SideBar";
 
 export default {
   name: "ProjectSettings",

@@ -1,11 +1,11 @@
 import * as types from "@/const/mutation-types";
+import project from "@/store/modules/project";
+import page from "@/store/modules/page"
 
 export default {
     state: {
         projectTypes: [],
         projectsData: [],
-        openProjectOptions: null,
-        pageImages: []
     },
 
     actions: {
@@ -90,54 +90,9 @@ export default {
                 }
             }
         },
-
-        addNewProject({commit, state}, payload) {
-            const idProject = Date.now();
-            let generateProject = {
-                id: idProject,
-                type: payload.type,
-                typeTitle: state.projectTypes.find(type => type.type === payload.type).title,
-                title: `${payload.title}`,
-                link: `/project/${idProject}`
-            };
-            let updateProjectsCookie = JSON.stringify([...state.projectsData, generateProject]);
-            document.cookie = `projects=${updateProjectsCookie}; path=/;`;
-            commit(types.ADD_NEW_PROJECT, {generateProject});
-        },
-
-        addNewPageToProject({commit}, payload) {
-            commit(types.ADD_PAGE, payload)
-        },
-
-        removePage({commit}, payload) {
-            commit(types.REMOVE_PAGE, payload)
-        },
-
-        removeProject({commit, state}, payload) {
-            let updateProjects = state.projectsData.filter(project => project.id !== payload.id);
-            document.cookie = `projects=${JSON.stringify(updateProjects)}; path=/;`
-            commit(types.REMOVE_PROJECT, {projects: updateProjects})
-        },
-
-        changeOpenProjectOptions({commit}, payload) {
-            commit(types.CHANGE_OPEN_OPTIONS, payload);
-        },
-
-        changeNameProject({commit}, payload) {
-            commit(types.CHANGE_NAME_PROJECT, payload);
-        },
-
-        setSettingsPage({commit}, payload) {
-            commit(types.SET_SETTINGS_PAGE, payload)
-        },
-
-        setImgPage({commit}, payload) {
-            commit(types.SET_IMG_PAGE, payload);
-        }
-
     },
-    mutations: {
 
+    mutations: {
         [types.UPDATE_PROJECTS](state, projects) {
             state.projectsData = projects;
         },
@@ -145,102 +100,11 @@ export default {
         [types.GENERATE_PROJECTS_TYPES](state, payload) {
             state.projectTypes = payload
         },
-
-        [types.ADD_NEW_PROJECT](state, {generateProject}) {
-            state.projectsData.push(generateProject)
-
-        },
-
-        [types.ADD_PAGE](state, payload) {
-            let indexProject = state.projectsData.findIndex(i => i.id === payload.id)
-            if (indexProject !== -1) {
-                if ('pages' in state.projectsData[indexProject]) {
-                    state.projectsData[indexProject].pages.push({id: Date.now(), title: payload.newName})
-                } else {
-                    state.projectsData[indexProject].pages = [{id: Date.now(), title: payload.newName}]
-                }
-                document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
-            }
-        },
-
-        [types.REMOVE_PAGE](state, payload) {
-            let indexProject = state.projectsData.findIndex(i => i.id === payload.idProject);
-            if (indexProject !== -1) {
-                // let indexPage = state.projectsData[indexProject].pages.findIndex(page => page.id === payload.idPage);
-                state.projectsData[indexProject].pages = state.projectsData[indexProject].pages.filter(page => page.id !== payload.idPage);
-                document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
-            }
-
-        },
-
-        [types.REMOVE_PROJECT](state, payload) {
-            state.projectsData = payload.projects
-
-        },
-
-        [types.CHANGE_OPEN_OPTIONS](state, payload) {
-            state.openProjectOptions = payload.id;
-        },
-
-        [types.CHANGE_NAME_PROJECT](state, payload) {
-            let indexProject = state.projectsData.findIndex(i => i.id === payload.id);
-
-            if (indexProject !== -1) {
-                state.projectsData[indexProject].title = payload.newName;
-                document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
-            }
-        },
-
-        [types.SET_SETTINGS_PAGE](state, payload) {
-            let findProject;
-            let indexPage;
-            state.projectsData.forEach((project, index) => {
-                if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id === payload.id)
-                    if (indexPage !== -1) {
-                        findProject = index
-
-                    }
-                }
-            })
-
-            state.projectsData[findProject].pages[indexPage] = {
-                ...state.projectsData[findProject].pages[indexPage],
-                title: payload.title,
-                description: payload.description
-            }
-            document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
-        },
-
-        [types.SET_IMG_PAGE](state, payload) {
-            let findProject;
-            let indexPage;
-            state.projectsData.forEach((project, index) => {
-                if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id === payload.id)
-                    if (indexPage !== -1) {
-                        findProject = index
-
-                    }
-                }
-            })
-
-            state.projectsData[findProject].pages[indexPage] = {
-                ...state.projectsData[findProject].pages[indexPage],
-                srcImg: payload.srcImg
-            }
-
-            document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
-        }
     },
 
     getters: {
         getAllProjects(state) {
             return state.projectsData
-        },
-
-        getProjectById: (state) => (id) => {
-            return state.projectsData.find(project => project.id === id)
         },
 
         // Get types of projects
@@ -253,39 +117,10 @@ export default {
             return state.projectsData.filter(i => i.type === type);
         },
 
-        getOpenProjectOptions(state) {
-            return state.openProjectOptions
-        },
+    },
 
-        getPagesByIdProject: (state) => (id) => {
-            let project = state.projectsData.find(i => i.id === id)
-            return 'pages' in project ? state.projectsData.find(i => i.id === id).pages : []
-        },
-
-        getPageById: (state) => (id) => {
-            let findPage;
-            state.projectsData.forEach(project => {
-                if (project.pages) {
-                    findPage = project.pages.find(page => page.id === id)
-
-                }
-            })
-
-            return findPage
-        },
-        getLinkPage: (state) => (id) => {
-            let findProject;
-            state.projectsData.forEach(project => {
-                if (project.pages) {
-                    let page = project.pages.find(page => page.id === id)
-                    if (page) {
-                        findProject = project
-                    }
-
-                }
-            })
-
-            return `https://project_${findProject.id}/page_${id}`
-        }
+    modules: {
+        project,
+        page
     }
 }

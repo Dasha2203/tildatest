@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import Header from "@/components/Header";
+import Header from "@/components/global/Header/Header";
 import {mapActions, mapGetters} from "vuex";
-import Symbols from "@/components/Symbols";
+import Symbols from "@/components/global/Symbols";
 export default {
   name: 'App',
   components: {
