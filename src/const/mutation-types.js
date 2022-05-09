@@ -12,3 +12,4 @@ export const ADD_PAGE = 'ADD_PAGE';
 export const REMOVE_PAGE = 'REMOVE_PAGE';
 export const SET_SETTINGS_PAGE = 'SET_SETTINGS_PAGE';
 export const SET_IMG_PAGE = 'SET_IMG_PAGE';
+export const SET_PATH_PAGE = 'SET_PATH_PAGE';

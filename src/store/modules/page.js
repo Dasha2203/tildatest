@@ -46,7 +46,7 @@ export default {
 
         },
 
-        [types.SET_SETTINGS_PAGE](state, {rootState, id, title, description}) {
+        [types.SET_SETTINGS_PAGE](state, {rootState, id, title, description, path}) {
             let findProject;
             let indexPage;
 
@@ -63,9 +63,10 @@ export default {
             rootState.projects.projectsData[findProject].pages[indexPage] = {
                 ...rootState.projects.projectsData[findProject].pages[indexPage],
                 title: title,
-                description: description
+                description: description,
+                path: path
             }
-            document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
+            document.cookie = `projects=${JSON.stringify(rootState.projects.projectsData)}; path=/;`
         },
 
         [types.SET_IMG_PAGE](state, {rootState, id, srcImg}) {
@@ -86,8 +87,8 @@ export default {
                 srcImg
             }
 
-            document.cookie = `projects=${JSON.stringify(state.projectsData)}; path=/;`
-        }
+            document.cookie = `projects=${JSON.stringify(rootState.projects.projectsData)}; path=/;`
+        },
     },
     getters: {
 
@@ -107,20 +108,5 @@ export default {
 
             return findPage
         },
-
-        getLinkPage: (state, getters, rootState) => (id) => {
-            let findProject;
-            rootState.projects.projectsData.forEach(project => {
-                if (project.pages) {
-                    let page = project.pages.find(page => page.id === id)
-                    if (page) {
-                        findProject = project
-                    }
-
-                }
-            })
-
-            return `https://project_${findProject.id}/page_${id}`
-        }
     }
 }

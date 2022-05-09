@@ -43,7 +43,7 @@
 
     <Modal
         v-if="openSettingsPageModal"
-        @closeModal="this.openSettingsPageModal = false"
+        @closeModal="closeModal"
     >
       <template v-slot:header>
         <div class="modal__title">
@@ -75,13 +75,23 @@
               :name="'description'"
               @changeInput="handleChangeInput"
           />
-          <Input
-              :title="getLinkPage(page.id)"
-              :autofocus="true"
-              :error="''"
-              :label="'Адрес страницы'"
-              :disabled="true"
-          />
+          <div class="row">
+            <Input
+                :title="`http://${$route.fullPath}/`"
+                :autofocus="true"
+                :error="''"
+                :label="'Адрес страницы'"
+                :disabled="true"
+            />
+            <Input
+                :title="selectPage.path"
+                :autofocus="true"
+                :error="selectPage.errorPath"
+                :label="''"
+                :name="'path'"
+                @changeInput="handleChangeInput"
+            />
+          </div>
         </div>
         <div v-show="activeSettingsTab === settingsTabs[1]">
           <div class="subtitle">Текущее изображение бейджика</div>
@@ -108,13 +118,14 @@
       </template>
 
       <template v-slot:footer>
-        <router-link class="navigation-link" :to="`/project/settings/page/${page.id}`">Перейти в настройки сайта
+        <router-link class="navigation-link" :to="`/project/settings/page/${page.id}`">
+          Перейти в настройки сайта
         </router-link>
         <div class="buttons">
           <button
               type="button"
               class="button button-border"
-              @click="this.openSettingsPageModal=false"
+              @click="closeModal"
           >
             Закрыть
           </button>
@@ -166,11 +177,12 @@ export default {
         name: this.page.title,
         description: this.page.description || '',
         link: this.page.link,
-        errorName: ''
+        errorName: '',
+        errorPath: '',
+        path: this.page.path || this.page.id
       }
     }
   },
-  computed: mapGetters(['getLinkPage']),
   methods: {
     ...mapActions(['setSettingsPage', 'setImgPage']),
     handleSelectSetting(tab) {
@@ -181,17 +193,29 @@ export default {
       this.selectPage[event.target.name] = event.target.value
     },
 
+    closeModal() {
+      this.selectPage.name = this.page.title;
+      this.selectPage.description = this.page.description;
+      this.selectPage.path = this.page.path || this.page.id;
+      this.openSettingsPageModal = false;
+      this.selectPage.errorName = '';
+      this.selectPage.errorPath = '';
+    },
+
     saveSettings() {
-      if (this.selectPage.name) {
+      if (this.selectPage.name && this.selectPage.path) {
         this.setSettingsPage({
           id: this.page.id,
           title: this.selectPage.name,
-          description: this.selectPage.description
+          description: this.selectPage.description,
+          path: this.selectPage.path
         })
 
-        this.openSettingsPageModal = false;
-      } else {
+        this.closeModal();
+      } else if (!this.selectPage.name) {
         this.selectPage.errorName = 'Введите название страницы'
+      } else {
+        this.selectPage.errorPath = 'Введите адрес страницы'
       }
     },
 

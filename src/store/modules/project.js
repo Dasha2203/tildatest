@@ -36,7 +36,6 @@ export default {
     mutations: {
         [types.ADD_NEW_PROJECT](state, {rootState, generateProject}) {
             rootState.projects.projectsData.push(generateProject)
-
         },
 
         [types.REMOVE_PROJECT](state, {rootState, projects}) {
