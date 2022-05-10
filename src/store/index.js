@@ -69,6 +69,16 @@ export default new Vuex.Store({
 
             setProjectsCookie(state.projectsData);
         },
+
+        [types.ADD_BLOCK_PAGE](state, payload) {
+            const {indexProject, indexPage, block} = payload;
+            if ('blocks' in state.projectsData[indexProject].pages[indexPage]) {
+                state.projectsData[indexProject].pages[indexPage].blocks.push(block)
+            } else {
+                state.projectsData[indexProject].pages[indexPage].blocks = [block]
+            }
+            setProjectsCookie(state.projectsData);
+        }
     },
 
     modules: {

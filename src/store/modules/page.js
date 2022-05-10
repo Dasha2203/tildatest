@@ -66,6 +66,35 @@ export default {
             })
 
             commit(types.SET_IMG_PAGE, {indexProject, indexPage, ...payload});
+        },
+
+        addBlockToPage({ commit, getters }, payload) {
+            const { idPage, idBlock, title, description } = payload;
+            const projects = getters.getAllProjects;
+            let indexProject;
+            let indexPage;
+
+            projects.forEach((project, index) => {
+                if (project.pages) {
+                    indexPage = project.pages.findIndex(page => page.id === idPage)
+                    if (indexPage !== -1) {
+                        indexProject = index
+                    }
+                }
+            })
+            console.log('payload', payload);
+            let payloadData = {
+                indexPage,
+                indexProject,
+                block: {
+                    id: Date.now(),
+                    type: idBlock,
+                    title,
+                    description
+                }
+            }
+
+            commit(types.ADD_BLOCK_PAGE, payloadData)
         }
     },
 
@@ -83,11 +112,22 @@ export default {
 
             projects.forEach(project => {
                 if (project.pages) {
-                    findPage = project.pages.find(page => page.id === id)
+                    let page = project.pages.find(page => page.id === id);
+
+                    if (page) {
+                        findPage = page
+                    }
+
                 }
             })
 
             return findPage
         },
+
+        getBlocksPage: (state, getters) => (id) => {
+            let page = getters.getPageById(id);
+
+            return page.blocks || []
+        }
     }
 }
