@@ -84,8 +84,9 @@
 </template>
 
 <script>
-import Options from "@/components/Project/Options";
 import {mapActions, mapGetters} from "vuex";
+
+import Options from "@/components/Project/Options";
 import Modal from "@/components/global/Modal";
 import Input from "@/components/global/Input";
 

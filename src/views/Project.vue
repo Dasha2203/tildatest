@@ -169,15 +169,18 @@ export default {
   },
   methods: {
     ...mapActions(['addNewPageToProject', 'removePage']),
+
     closeModal() {
       this.inputError = '';
       this.domain = '';
       this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`;
       this.openModal = false
     },
+
     handleChangeInput(event) {
       this[event.target.name] = event.target.value
     },
+
     handleAddPage() {
       if (this.newTitle.trim()) {
         this.addNewPageToProject({

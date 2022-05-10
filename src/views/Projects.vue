@@ -11,8 +11,9 @@
 </template>
 
 <script>
-  import ProjectWrap from "@/components/Projects/ProjectWrap";
   import { mapGetters } from 'vuex';
+
+  import ProjectWrap from "@/components/Projects/ProjectWrap";
 
   export default {
     name: "Projects",

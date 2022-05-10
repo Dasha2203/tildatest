@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import routers from "@/routers";
-import './assets/less/main.less';
 import store from "@/store";
+
+import './assets/less/main.less';
 
 const app = createApp(App)
 app.use(routers);

@@ -19,10 +19,10 @@
         </span>
       </div>
     </div>
-    <div class="projects-wrap__body" v-if="getTypeProjects(type.type).length">
+    <div class="projects-wrap__body" v-if="emptyProjects">
       <div
           class="project-wrap__item"
-          v-for="(project, idx) in getTypeProjects(type.type)"
+          v-for="(project, idx) in typeProjects"
           :key="project.id"
       >
         <CardProject
@@ -55,7 +55,7 @@
         <button
             type="button"
             class="button button-orange"
-            @click="() => handleAddProject(type.type)"
+            @click="handleAddProject"
         >
           Создать
         </button>
@@ -65,8 +65,9 @@
 </template>
 
 <script>
-import CardProject from "@/components/Project/CardProject";
 import {mapActions, mapGetters} from "vuex";
+
+import CardProject from "@/components/Project/CardProject";
 import Modal from "@/components/global/Modal";
 import Input from "@/components/global/Input";
 
@@ -83,24 +84,28 @@ export default {
       openCreateProjectModal: false,
       inputError: '',
       newTitle: `${this.type.title}`
-
     }
   },
   computed: {
-    ...mapGetters(['getAllProjects', 'getTypeProjects'])
+    ...mapGetters(['getAllProjects', 'getTypeProjects']),
+    emptyProjects() {
+      return !!this.typeProjects.length
+    },
+    typeProjects() {
+      return this.getTypeProjects(this.type.type);
+    }
   },
   components: {Input, Modal, CardProject},
   methods: {
     ...mapActions(['addNewProject']),
-    ...mapGetters({methodGetTypeProjects: "getTypeProjects"}),
     handleChangeTitle(event) {
       this.newTitle = event.target.value;
     },
-    handleAddProject(typeId) {
+    handleAddProject() {
       if (this.newTitle.trim()) {
         this.addNewProject({
           title: this.newTitle,
-          type: typeId
+          type: this.type.type
         });
         this.closeModal();
       } else {

@@ -25,17 +25,22 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+
 import SideBar from "@/components/ProgectSettings/SideBar";
 
 export default {
   name: "ProjectSettings",
-  components: {SideBar},
+  components: { SideBar },
   data() {
     return {
       openSideBar: false
     }
   },
-  computed: mapGetters(['getPageById'])
+  computed: mapGetters(['getPageById']),
+  methods: mapActions(["getCategory"]),
+  mounted() {
+    this.getCategory();
+  }
 }
 </script>

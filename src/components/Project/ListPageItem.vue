@@ -152,11 +152,11 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 
-import Modal from "@/components/global/Modal";
 import TabNavigation from "@/components/global/TabNavigation";
+import Modal from "@/components/global/Modal";
 import Input from "@/components/global/Input";
-import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "ListPageItem",

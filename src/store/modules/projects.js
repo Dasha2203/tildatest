@@ -1,13 +1,6 @@
 import * as types from "@/const/mutation-types";
-import project from "@/store/modules/project";
-import page from "@/store/modules/page"
 
 export default {
-    state: {
-        projectTypes: [],
-        projectsData: [],
-    },
-
     actions: {
         async fetchAllProjects({commit}) {
             let projectsTypes = [];
@@ -91,36 +84,19 @@ export default {
             }
         },
     },
-
-    mutations: {
-        [types.UPDATE_PROJECTS](state, projects) {
-            state.projectsData = projects;
-        },
-
-        [types.GENERATE_PROJECTS_TYPES](state, payload) {
-            state.projectTypes = payload
-        },
-    },
-
     getters: {
-        getAllProjects(state) {
-            return state.projectsData
+        getAllProjects(state, getters, rootState) {
+            return rootState.projectsData
         },
 
         // Get types of projects
-        getProjectsTypes(state) {
-            return state.projectTypes
+        getProjectsTypes(state, getters, rootState) {
+            return rootState.projectTypes
         },
 
         // getting projects of a given type
-        getTypeProjects: (state) => (type) => {
-            return state.projectsData.filter(i => i.type === type);
+        getTypeProjects: (state, getters, rootState) => (type) => {
+            return rootState.projectsData.filter(i => i.type === type);
         },
-
     },
-
-    modules: {
-        project,
-        page
-    }
 }

@@ -5,104 +5,85 @@ export default {
         pageImages: []
     },
     actions: {
-        addNewPageToProject({commit, rootState}, payload) {
-            commit(types.ADD_PAGE, {rootState, ...payload})
+        addNewPageToProject({commit, getters}, payload) {
+            const { id, newName } = payload;
+            const projects = getters.getAllProjects;
+
+            let indexProject = projects.findIndex(i => i.id === id);
+
+            if (indexProject !== -1) {
+                let page = {
+                    id: Date.now(),
+                    title: newName
+                }
+
+                commit(types.ADD_PAGE, {indexProject, page})
+            }
         },
 
-        removePage({commit, rootState}, payload) {
-            commit(types.REMOVE_PAGE, {rootState, ...payload})
+        removePage({commit, getters}, payload) {
+            const projects = getters.getAllProjects;
+            const { idProject } = payload;
+
+            let indexProject = projects.findIndex(i => i.id === idProject);
+
+            if (indexProject !== -1) {
+                commit(types.REMOVE_PAGE, {indexProject, ...payload})
+            }
         },
 
-        setSettingsPage({commit, rootState}, payload) {
-            commit(types.SET_SETTINGS_PAGE, {rootState, ...payload})
+        setSettingsPage({commit, getters}, payload) {
+            const projects = getters.getAllProjects;
+            let indexProject;
+            let indexPage;
+
+            projects.forEach((project, index) => {
+                if (project.pages) {
+                    indexPage = project.pages.findIndex(page => page.id === payload.id)
+                    if (indexPage !== -1) {
+                        indexProject = index
+
+                    }
+                }
+            })
+            commit(types.SET_SETTINGS_PAGE, {indexProject, indexPage, ...payload})
         },
 
         setImgPage({commit, rootState}, payload) {
-            commit(types.SET_IMG_PAGE, {rootState, ...payload});
+            const {projectsData} = rootState.projects;
+            let indexProject;
+            let indexPage;
+
+            projectsData.forEach((project, index) => {
+                if (project.pages) {
+
+                    indexPage = project.pages.findIndex(page => page.id === payload.id);
+
+                    if (indexPage !== -1) {
+                        indexProject = index
+                    }
+                }
+            })
+
+            commit(types.SET_IMG_PAGE, {indexProject, indexPage, ...payload});
         }
     },
 
-    mutations: {
-        [types.ADD_PAGE](state, {rootState, id, newName}) {
-            let indexProject = rootState.projects.projectsData.findIndex(i => i.id === id)
-            if (indexProject !== -1) {
-                if ('pages' in rootState.projects.projectsData[indexProject]) {
-                    rootState.projects.projectsData[indexProject].pages.push({id: Date.now(), title: newName})
-                } else {
-                    rootState.projects.projectsData[indexProject].pages = [{id: Date.now(), title: newName}]
-                }
-                document.cookie = `projects=${JSON.stringify(rootState.projects.projectsData)}; path=/;`
-            }
-        },
-
-        [types.REMOVE_PAGE](state, {rootState, idProject, idPage}) {
-            let indexProject = rootState.projects.projectsData.findIndex(i => i.id === idProject);
-
-            if (indexProject !== -1) {
-                rootState.projects.projectsData[indexProject].pages =
-                    rootState.projects.projectsData[indexProject].pages.filter(page => page.id !== idPage);
-                document.cookie = `projects=${JSON.stringify(rootState.projects.projectsData)}; path=/;`
-            }
-
-        },
-
-        [types.SET_SETTINGS_PAGE](state, {rootState, id, title, description, path}) {
-            let findProject;
-            let indexPage;
-
-            rootState.projects.projectsData.forEach((project, index) => {
-                if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id === id)
-                    if (indexPage !== -1) {
-                        findProject = index
-
-                    }
-                }
-            })
-
-            rootState.projects.projectsData[findProject].pages[indexPage] = {
-                ...rootState.projects.projectsData[findProject].pages[indexPage],
-                title: title,
-                description: description,
-                path: path
-            }
-            document.cookie = `projects=${JSON.stringify(rootState.projects.projectsData)}; path=/;`
-        },
-
-        [types.SET_IMG_PAGE](state, {rootState, id, srcImg}) {
-            let findProject;
-            let indexPage;
-            rootState.projectsData.forEach((project, index) => {
-                if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id === id)
-                    if (indexPage !== -1) {
-                        findProject = index
-
-                    }
-                }
-            })
-
-            rootState.projectsData[findProject].pages[indexPage] = {
-                ...rootState.projectsData[findProject].pages[indexPage],
-                srcImg
-            }
-
-            document.cookie = `projects=${JSON.stringify(rootState.projects.projectsData)}; path=/;`
-        },
-    },
     getters: {
+        getPagesByIdProject: (state, getters) => (id) => {
+            const projects = getters.getAllProjects;
+            let project = projects.find(i => i.id === id)
 
-        getPagesByIdProject: (state, getters, rootState) => (id) => {
-            let project = rootState.projects.projectsData.find(i => i.id === id)
-            return 'pages' in project ? rootState.projects.projectsData.find(i => i.id === id).pages : []
+            return 'pages' in project ? projects.find(i => i.id === id).pages : []
         },
 
-        getPageById: (state, getters, rootState) => (id) => {
+        getPageById: (state, getters) => (id) => {
+            const projects = getters.getAllProjects;
             let findPage;
-            rootState.projects.projectsData.forEach(project => {
+
+            projects.forEach(project => {
                 if (project.pages) {
                     findPage = project.pages.find(page => page.id === id)
-
                 }
             })
 
