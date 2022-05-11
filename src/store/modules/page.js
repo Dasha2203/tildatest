@@ -1,4 +1,5 @@
 import * as types from "@/const/mutation-types";
+import getIdxProjectPage from "@/helpers/getIdxProjectPage";
 
 export default {
     state: {
@@ -34,36 +35,15 @@ export default {
 
         setSettingsPage({commit, getters}, payload) {
             const projects = getters.getAllProjects;
-            let indexProject;
-            let indexPage;
+            const {indexProject, indexPage} = getIdxProjectPage(projects, payload.id);
 
-            projects.forEach((project, index) => {
-                if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id === payload.id)
-                    if (indexPage !== -1) {
-                        indexProject = index
-
-                    }
-                }
-            })
             commit(types.SET_SETTINGS_PAGE, {indexProject, indexPage, ...payload})
         },
 
-        setImgPage({commit, rootState}, payload) {
-            const {projectsData} = rootState.projects;
-            let indexProject;
-            let indexPage;
+        setImgPage({commit, getters}, payload) {
+            const projects = getters.getAllProjects;
+            const {indexProject, indexPage} = getIdxProjectPage(projects, payload.id);
 
-            projectsData.forEach((project, index) => {
-                if (project.pages) {
-
-                    indexPage = project.pages.findIndex(page => page.id === payload.id);
-
-                    if (indexPage !== -1) {
-                        indexProject = index
-                    }
-                }
-            })
 
             commit(types.SET_IMG_PAGE, {indexProject, indexPage, ...payload});
         },
@@ -71,18 +51,8 @@ export default {
         addBlockToPage({ commit, getters }, payload) {
             const { idPage, idBlock, title, description } = payload;
             const projects = getters.getAllProjects;
-            let indexProject;
-            let indexPage;
+            const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
 
-            projects.forEach((project, index) => {
-                if (project.pages) {
-                    indexPage = project.pages.findIndex(page => page.id === idPage)
-                    if (indexPage !== -1) {
-                        indexProject = index
-                    }
-                }
-            })
-            console.log('payload', payload);
             let payloadData = {
                 indexPage,
                 indexProject,

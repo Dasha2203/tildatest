@@ -1,0 +1,94 @@
+.control-block {
+  padding: 15px 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  opacity: 0;
+  transition: all .3s ease;
+
+  .control-block__left,
+  .control-block__right{
+    display: flex;
+
+    .control-block__button {
+      &:first-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        border-left: 1px solid #ccc;
+      }
+
+      &:last-child {
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+    }
+  }
+
+  .control-block__right {
+    .control-block__button {
+      width: 40px;
+      &:not(:last-child) {
+        border-right: 1px solid #ccc;
+      }
+    }
+  }
+  .control-block__button {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    transition: all .3s ease;
+
+    &:hover {
+      background-color: #cbcaca;
+    }
+
+    .arrow-up {
+      position: relative;
+      width: 40px;
+
+      &:before {
+        content: ' \2191';
+      }
+    }
+
+    .arrow-down {
+      width: 40px;
+      &:before {
+        content: ' \2193';
+      }
+    }
+
+    .icon-settings {
+      position: relative;
+      display: block;
+
+      &:before {
+        content: "\e019";
+        display: block;
+      }
+    }
+
+    svg {
+      margin-right: 5px;
+      width: 12px;
+      height: 12px;
+
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
+}

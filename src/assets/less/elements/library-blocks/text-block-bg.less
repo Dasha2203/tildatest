@@ -1,22 +1,33 @@
 .text-block-bg {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    text-align: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    //background-image: url("../../images/pages/3.jpeg");
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-    &__title {
-      margin-bottom: 30px;
-      font-size: 32px;
-      font-weight: 500;
-      color: @color-white;
+  &:hover {
+    .control-block {
+      opacity: 1;
     }
+  }
 
-    &__description {
-      font-size: 18px;
-      font-weight: 300;
-      color: @color-white;
-    }
+  &__title {
+    margin-bottom: 30px;
+    font-size: 48px;
+    font-weight: 700;
+    color: @color-white;
+  }
+
+  &__description {
+    font-size: 22px;
+    font-weight: 300;
+    color: @color-white;
+  }
 }

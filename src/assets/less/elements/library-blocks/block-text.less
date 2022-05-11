@@ -1,7 +1,15 @@
 .text-block {
+  position: relative;
   padding-top: 30px;
   padding-bottom: 30px;
   text-align: center;
+  background-color: @color-white;
+
+  &:hover {
+    .control-block {
+      opacity: 1;
+    }
+  }
 
   &__title {
     margin-bottom: 15px;

@@ -3,7 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Projects from "@/views/Projects.vue";
 import Profile from "@/views/Profile";
 import Project from "@/views/Project";
-import ProjectSettings from "@/views/ProjectSettings";
+import ProjectSettings from "@/views/PageSettings";
 
 export default createRouter({
     history: createWebHistory(),

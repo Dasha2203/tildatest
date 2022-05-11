@@ -52,9 +52,9 @@ export default new Vuex.Store({
 
             state.projectsData[indexProject].pages[indexPage] = {
                 ...state.projectsData[indexProject].pages[indexPage],
-                title: title,
-                description: description,
-                path: path
+                title,
+                description,
+                path
             }
             setProjectsCookie(state.projectsData);
         },
