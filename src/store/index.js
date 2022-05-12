@@ -78,6 +78,12 @@ export default new Vuex.Store({
                 state.projectsData[indexProject].pages[indexPage].blocks = [block]
             }
             setProjectsCookie(state.projectsData);
+        },
+
+        [types.REMOVE_BLOCK_PAGE](state, payload) {
+            const {indexPage, indexProject, newArrBlocks} = payload;
+            state.projectsData[indexProject].pages[indexPage].blocks = newArrBlocks
+            setProjectsCookie(state.projectsData);
         }
     },
 

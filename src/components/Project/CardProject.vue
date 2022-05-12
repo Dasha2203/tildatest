@@ -4,10 +4,9 @@
       <svg>
         <use xlink:href="#options"></use>
       </svg>
-      <Options
+      <DropDown
           :title="'Настройки сайта'"
-          @removeProject="removeProjectById"
-          @changeNameProject="openChangeNameModal = true"
+          :listData="listOptions"
           v-if="!!getOpenProjectOptions && getOpenProjectOptions === project.id"
       />
     </div>
@@ -86,7 +85,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 
-import Options from "@/components/Project/Options";
+import DropDown from "@/components/Project/DropDown";
 import Modal from "@/components/global/Modal";
 import Input from "@/components/global/Input";
 
@@ -95,7 +94,7 @@ export default {
   components: {
     Input,
     Modal,
-    Options
+    DropDown
   },
   props: {
     project: {
@@ -111,11 +110,29 @@ export default {
     return {
       openChangeNameModal: false,
       inputError: '',
-      newTitle: this.project.title
+      newTitle: this.project.title,
+
     }
   },
   computed: {
-    ...mapGetters(['getOpenProjectOptions'])
+    ...mapGetters(['getOpenProjectOptions']),
+    listOptions() {
+      let that = this;
+      return [
+        {
+          name: 'Переименовать',
+          action() {
+            that.openChangeNameModal = true
+          }
+        },
+        {
+          name: 'Удалить',
+          action() {
+            that.removeProjectById()
+          }
+        }
+      ]
+    }
   },
   methods: {
     ...mapActions(['removeProject', 'changeOpenProjectOptions', 'changeNameProject']),
