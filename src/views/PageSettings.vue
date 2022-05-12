@@ -7,16 +7,26 @@
     </div>
     <div class="settings-page__body" v-if="!!getBlocks.length">
       <template
-          v-for="block in pageBlocks"
+          v-for="(block, idx) in pageBlocks"
           :key="block.id"
       >
-        <BlockText
-            v-if="block.type === getBlocks[0].id"
+        <HiddenBlock
+            v-if="block.hide"
             :content="block"
+            :idx="idx"
+            :lastIdx="pageBlocks.length - 1"
+        />
+        <BlockText
+            v-else-if="block.type === getBlocks[0].id"
+            :content="block"
+            :idx="idx"
+            :lastIdx="pageBlocks.length - 1"
         />
         <BgBlockText
             v-else
             :content="block"
+            :idx="idx"
+            :lastIdx="pageBlocks.length - 1"
         />
       </template>
       <div class="container">
@@ -34,8 +44,42 @@
     <SideBar
         :active="openSideBar"
         @close="openSideBar = false"
-        @addBlock="addBlock"
+        @addBlock="setOpenCreateBlockModal"
     />
+
+    <!--    Modal create block-->
+    <Modal
+        v-if="openCreateBlockModal"
+        @closeModal="closeModal"
+    >
+      <template v-slot:header>
+        <div class="modal__title">
+          Заполните поля блока
+        </div>
+      </template>
+      <template v-slot:body>
+        <Input
+            :title="newBlock.title"
+            :autofocus="true"
+            :error="newBlock.errorTitle"
+            :name="'title'"
+            @changeInput="handleChangeInputBlock"
+        />
+        <TextArea
+            :title="newBlock.description"
+            :placeholder="'Текст блока'"
+            @changeInput="handleChangeInputBlock"
+            :name="'description'"
+        />
+        <button
+            type="button"
+            class="button button-orange"
+            @click="addBlock"
+        >
+          Сохранить
+        </button>
+      </template>
+    </Modal>
 
     <Modal
         v-if="getOpenSettingsModal"
@@ -157,16 +201,24 @@ import BgBlockText from "@/components/ProgectSettings/BgBlockText";
 import Modal from "@/components/global/Modal";
 import TabNavigation from "@/components/global/TabNavigation";
 import Input from "@/components/global/Input";
+import TextArea from "@/components/global/TextArea";
+import HiddenBlock from "@/components/ProgectSettings/HiddenBlock";
 
 export default {
   name: "ProjectSettings",
-  components: {Input, TabNavigation, Modal, BlockText, SideBar, BgBlockText},
+  components: {HiddenBlock, TextArea, Input, TabNavigation, Modal, BlockText, SideBar, BgBlockText},
   data() {
     return {
+      openCreateBlockModal: false,
+      selectBlock: null,
       allImages: [],
       openSideBar: false,
       openSettingsPageModal: false,
-      idPage: +routers.currentRoute.value.params.id,
+      newBlock: {
+        title: 'Title block',
+        description: '',
+        errorTitle: ''
+      },
       selectPage: {
         name: '',
         description: '',
@@ -186,19 +238,25 @@ export default {
       return this.getPageById(this.idPage);
     },
     pageBlocks() {
-      return this.getBlocksPage(this.idPage);
+      return this.getBlocksPage;
+    },
+    idPage() {
+      this.setSelectPage({id: +routers.currentRoute.value.params.id})
+      return +routers.currentRoute.value.params.id
     },
   },
 
   watch: {
     page: function () {
-      this.selectPage = {
-        name: this.page.title,
-        description: this.page.description || '',
-        link: this.page.link,
-        errorName: '',
-        errorPath: '',
-        path: this.page.path || this.page.id
+      if (this.page) {
+        this.selectPage = {
+          name: this.page.title,
+          description: this.page.description || '',
+          link: this.page.link,
+          errorName: '',
+          errorPath: '',
+          path: this.page.path || this.page.id
+        }
       }
     }
   },
@@ -210,28 +268,39 @@ export default {
       'setSettingsPage',
       'setImgPage',
       'changeOpenPageSettings',
-      'removeSelectBlock',
-      'moveSelectBlock',
-      "duplicateSelectBlock"
+      'setSelectPage'
     ]),
     ...mapGetters(['getCategoryBlocks']),
-    addBlock(block) {
-      let title = 'Title Block';
-      let description = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-      the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-      scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-      typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-      Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
+    setOpenCreateBlockModal(block) {
+      this.selectBlock = block;
+      this.openCreateBlockModal = true;
+    },
+    addBlock() {
 
       let payloadBlock = {
-        idBlock: block.id,
+        idBlock: this.selectBlock.id,
         idPage: this.idPage,
-        title,
-        description
+        title: this.newBlock.title,
+        description: this.newBlock.description
       }
 
-      this.addBlockToPage(payloadBlock);
-      this.openSideBar = false;
+      if (this.newBlock.title) {
+        this.addBlockToPage(payloadBlock);
+        this.openCreateBlockModal = false;
+        this.openSideBar = false;
+        this.newBlock = {
+          title: 'Title block',
+          description: '',
+          errorTitle: ''
+        }
+      } else {
+        this.newBlock.errorTitle = 'Введите заголовок'
+      }
+
+
+    },
+    handleChangeInputBlock(event) {
+      this.newBlock[event.target.name] = event.target.value
     },
 
     handleChangeInput(event) {
@@ -278,8 +347,10 @@ export default {
     }
   },
   mounted() {
-    this.getCategory();
+    window.scrollTo(0, 0)
     let pageData = this.getPageById(this.idPage);
+    let data = require('@/data/images.json');
+
     this.selectPage = {
       name: pageData.title,
       description: pageData.description || '',
@@ -288,7 +359,7 @@ export default {
       errorPath: '',
       path: pageData.path || pageData.id
     }
-    let data = require('@/data/images.json');
+
     this.allImages = data;
     this.activeImg = data[0].src
 

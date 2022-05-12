@@ -11,16 +11,16 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
-  import ProjectWrap from "@/components/Projects/ProjectWrap";
+import ProjectWrap from "@/components/Projects/ProjectWrap";
 
-  export default {
-    name: "Projects",
-    components: {
-      ProjectWrap
-    },
-    computed: mapGetters(['getProjectsTypes']),
+export default {
+  name: "Projects",
+  components: {
+    ProjectWrap
+  },
+  computed: mapGetters(['getProjectsTypes']),
 
-  }
+}
 </script>

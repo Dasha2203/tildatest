@@ -12,10 +12,11 @@ export const SET_SETTINGS_PAGE = 'SET_SETTINGS_PAGE';
 export const SET_IMG_PAGE = 'SET_IMG_PAGE';
 export const ADD_BLOCK_PAGE = 'ADD_BLOCK_PAGE';
 export const CHANGE_OPEN_SETTINGS = 'CHANGE_OPEN_SETTINGS';
-export const REMOVE_BLOCK_PAGE = 'REMOVE_BLOCK_PAGE';
-
+export const EDIT_BLOCKS_PAGE = 'EDIT_BLOCKS_PAGE';
+export const SELECT_PAGE = 'SELECT_PAGE';
 // library block
 
 export const SET_LIBRARY = 'SET_LIBRARY';
+
 
 

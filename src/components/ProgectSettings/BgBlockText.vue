@@ -2,7 +2,9 @@
   <div :class="`text-block-bg ${preview ? 'preview' : ''}`" :style="bgImage">
     <ControlBlock
         v-if="!preview"
-        :idBlock="content.id"
+        :block="content"
+        :idx="idx"
+        :lastIdx="lastIdx"
     />
     <div class="container">
       <div
@@ -27,7 +29,7 @@ import routers from "@/routers";
 export default {
   name: "BgBlockText",
   components: {ControlBlock},
-  props: ['content'],
+  props: ['content', 'idx', 'lastIdx'],
   computed: {
     bgImage() {
       return `background-image: url(${require('@/assets/images/pages/3.jpeg')})`

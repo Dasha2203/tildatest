@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['changeOpenProjectOptions', 'fetchAllProjects', 'changeOpenPageSettings']),
+    ...mapActions(['changeOpenProjectOptions', 'fetchAllProjects', 'changeOpenPageSettings', 'getCategory']),
     handleClick() {
       if (this.getOpenProjectOptions) {
         this.changeOpenProjectOptions(null)
@@ -34,6 +34,7 @@ export default {
     }
   },
   mounted() {
+    this.getCategory();
     this.fetchAllProjects();
   },
 }

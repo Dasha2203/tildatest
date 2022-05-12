@@ -4,9 +4,13 @@ import getIdxProjectPage from "@/helpers/getIdxProjectPage";
 export default {
     state: {
         pageImages: [],
-        openSettingsPageModal: false
+        openSettingsPageModal: false,
+        selectPage: null
     },
     actions: {
+        setSelectPage({commit}, payload) {
+            commit(types.SELECT_PAGE, payload)
+        },
         addNewPageToProject({commit, getters}, payload) {
             const { id, newName } = payload;
             const projects = getters.getAllProjects;
@@ -61,7 +65,8 @@ export default {
                     id: Date.now(),
                     type: idBlock,
                     title,
-                    description
+                    description,
+                    hide: false
                 }
             }
 
@@ -84,7 +89,26 @@ export default {
                         ...blocks.slice(indexBlock + 1)
                     ];
 
-                    commit(types.REMOVE_BLOCK_PAGE, {indexProject, indexPage, newArrBlocks})
+                    commit(types.EDIT_BLOCKS_PAGE, {indexProject, indexPage, newArrBlocks})
+                }
+            }
+        },
+
+        turnShowBlock({commit, getters}, payload) {
+            const {idPage, idBlock} = payload;
+            const projects = getters.getAllProjects;
+            const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
+
+            let blocks = projects[indexProject].pages[indexPage].blocks;
+
+            if (blocks.length) {
+                let indexBlock = blocks.findIndex(block => block.id === idBlock)
+
+                if(indexBlock !== -1) {
+
+                    blocks[indexBlock].hide = !blocks[indexBlock].hide;
+
+                    commit(types.EDIT_BLOCKS_PAGE, {indexProject, indexPage, newArrBlocks: blocks})
                 }
             }
         },
@@ -94,7 +118,7 @@ export default {
             const projects = getters.getAllProjects;
             const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
 
-            let blocks = projects[indexProject].pages[indexPage].blocks
+            let blocks = [...projects[indexProject].pages[indexPage].blocks]
 
             if (blocks.length) {
                 let indexBlock = blocks.findIndex(block => block.id === idBlock)
@@ -106,7 +130,7 @@ export default {
                     blocks[saveIndex] = blocks[indexBlock];
                     blocks[indexBlock] = saveBlock;
 
-                    // commit(types.REMOVE_BLOCK_PAGE, {indexProject, indexPage, newArrBlocks: blocks})
+                    commit(types.EDIT_BLOCKS_PAGE, {indexProject, indexPage, newArrBlocks: blocks})
                 }
             }
         },
@@ -116,19 +140,20 @@ export default {
             const projects = getters.getAllProjects;
             const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
 
-            let blocks = projects[indexProject].pages[indexPage].blocks
+            let blocks = [...projects[indexProject].pages[indexPage].blocks];
 
             if (blocks.length) {
                 let indexBlock = blocks.findIndex(block => block.id === idBlock)
 
                 if(indexBlock !== -1) {
+                    let duplicateBlock = {...blocks[indexBlock], id: Date.now()};
                     let newArrBlocks = [
                         ...blocks.slice(0, indexBlock + 1),
-                        blocks[indexBlock],
+                        duplicateBlock,
                         ...blocks.slice(indexBlock + 1)
                     ];
 
-                    commit(types.REMOVE_BLOCK_PAGE, {indexProject, indexPage, newArrBlocks})
+                    commit(types.EDIT_BLOCKS_PAGE, {indexProject, indexPage, newArrBlocks})
                 }
             }
         },
@@ -140,7 +165,9 @@ export default {
     mutations: {
         [types.CHANGE_OPEN_SETTINGS] (state, payload) {
             state.openSettingsPageModal = payload.open;
-
+        },
+        [types.SELECT_PAGE] (state, payload) {
+            state.selectPage = payload.id
         }
     },
     getters: {
@@ -169,15 +196,14 @@ export default {
             return findPage
         },
 
-        getBlocksPage: (state, getters) => (id) => {
-            let page = getters.getPageById(id)
-            console.log('here')
+        getBlocksPage: (state, getters) => {
+            let page = getters.getPageById(state.selectPage)
 
             return page.blocks || []
         },
 
         getOpenSettingsModal(state) {
             return state.openSettingsPageModal
-        }
+        },
     }
 }
