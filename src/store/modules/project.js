@@ -5,7 +5,7 @@ export default {
         openProjectOptions: null,
     },
     actions: {
-        addNewProject({ commit, getters }, payload) {
+        addNewProject({commit, getters}, payload) {
             const idProject = Date.now();
             const projectTypes = getters.getProjectsTypes;
 
@@ -24,7 +24,7 @@ export default {
                 link: `/project/${idProject}`
             };
 
-            commit(types.ADD_NEW_PROJECT, { generateProject });
+            commit(types.ADD_NEW_PROJECT, {generateProject});
         },
 
         changeNameProject({commit, getters}, payload) {
@@ -36,7 +36,7 @@ export default {
             }
         },
 
-        removeProject({ commit, getters}, payload) {
+        removeProject({commit, getters}, payload) {
             let projects = getters.getAllProjects;
             let newArrProjects = projects.filter(project => project.id !== payload.id);
 
@@ -50,7 +50,11 @@ export default {
     mutations: {
 
         [types.CHANGE_OPEN_OPTIONS](state, payload) {
-            state.openProjectOptions = payload.id;
+            if (payload) {
+                state.openProjectOptions = payload.id;
+            } else {
+                state.openProjectOptions = null
+            }
         },
     },
     getters: {

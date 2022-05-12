@@ -1,9 +1,10 @@
-import Vue from 'vue';
 import {createRouter, createWebHistory} from 'vue-router';
+
 import Projects from "@/views/Projects.vue";
 import Profile from "@/views/Profile";
 import Project from "@/views/Project";
 import ProjectSettings from "@/views/PageSettings";
+import PreviewPage from "@/views/PreviewPage";
 
 export default createRouter({
     history: createWebHistory(),
@@ -27,6 +28,10 @@ export default createRouter({
         {
             path: '/project/settings/page/:id',
             component: ProjectSettings
+        },
+        {
+            path: '/project/settings/preview/page/:id',
+            component: PreviewPage
         }
     ]
 })

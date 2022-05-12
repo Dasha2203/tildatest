@@ -2,7 +2,7 @@
   position: relative;
   padding-top: 80px;
   padding-bottom: 80px;
-  min-height: 100vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,10 +11,18 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border: 3px solid transparent;
+  box-sizing: border-box;
 
   &:hover {
     .control-block {
       opacity: 1;
+    }
+  }
+
+  &:not(.preview) {
+    &:hover {
+      border: 3px solid @color-gray;
     }
   }
 
