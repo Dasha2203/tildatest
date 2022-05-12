@@ -1,15 +1,15 @@
 <template>
-  <div class="preview" v-if="!!getBlocks.length">
+  <div class="preview" v-if="getBlocks.length">
     <template
         v-for="block in pageBlocks"
         :key="block.id"
     >
       <BlockText
-          v-if="block.type === getBlocks[0].id"
+          v-if="block.type === getBlocks[0].id && !block.hide"
           :content="block"
       />
       <BgBlockText
-          v-else
+          v-else-if="!block.hide"
           :content="block"
       />
     </template>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 import BgBlockText from "@/components/ProgectSettings/BgBlockText";
 import BlockText from "@/components/ProgectSettings/BlockText";
@@ -29,26 +29,27 @@ import routers from "@/routers";
 export default {
   name: "PreviewPage",
   components: {BlockText, BgBlockText},
-  data() {
-    return {
-      pageBlocks: []
-    }
-  },
   methods: {
-    ...mapGetters(['getBlocksPage'])
+    ...mapActions(['setSelectPage'])
   },
   computed: {
-      ...mapGetters(['getPageById', "getBlocks", 'getOpenSettingsModal']),
+      ...mapGetters(['getBlocksPage', 'getBlocks']),
 
-    // pageBlocks() {
-    //   return this.getBlocksPage(+routers.currentRoute.value.params.id);
-    // },
+    pageBlocks() {
+      return this.getBlocksPage;
+    },
+    idPage() {
+      this.setSelectPage({ id: +routers.currentRoute.value.params.id})
+      return +routers.currentRoute.value.params.id
+    },
   },
-
+  watch: {
+    idPage() {
+      this.setSelectPage({ id: this.idPage})
+    }
+  },
   mounted() {
-    console.log(+routers.currentRoute.value.params.id)
-    this.getBlc
-    this.pageBlocks = this.getBlocksPage(+routers.currentRoute.value.params.id);
+    window.scrollTo(0, 0)
   }
 }
 </script>

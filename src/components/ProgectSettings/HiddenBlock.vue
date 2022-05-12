@@ -1,5 +1,5 @@
 <template>
-  <div :class="`text-block ${preview ? 'preview' : ''}`">
+  <div :class="`block-hidden ${preview ? 'preview' : ''}`">
     <ControlBlock
         v-if="!preview"
         :block="content"
@@ -7,27 +7,17 @@
         :lastIdx="lastIdx"
     />
     <div class="container">
-      <div
-          class="text-block__title"
-          v-if="content.title"
-      >
-        {{ content.title }}
-      </div>
-      <div
-          class="text-block__description"
-      >
-        {{ content.description }}
-      </div>
+      Блок спрятан
     </div>
   </div>
 </template>
 
 <script>
-import ControlBlock from "@/components/ProgectSettings/ControlBlock";
 import routers from "@/routers";
+import ControlBlock from "@/components/ProgectSettings/ControlBlock";
 
 export default {
-  name: "BlockText",
+  name: "HiddenBlock",
   components: {ControlBlock},
   props: ['content', 'idx', 'lastIdx'],
   computed: {
@@ -37,3 +27,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

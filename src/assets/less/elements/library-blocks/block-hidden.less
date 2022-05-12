@@ -1,0 +1,24 @@
+.block-hidden {
+  position: relative;
+  padding: 30px;
+  text-align: center;
+  background-color: @color-white;
+  border: 1px dashed @color-gray;
+
+  &:hover {
+    .control-block {
+      opacity: 1;
+    }
+  }
+
+  &:not(.preview) {
+    &:hover {
+      border: 1px solid @color-gray;
+    }
+  }
+
+  .container {
+    color: @color-gray;
+    font-size: 18px;
+  }
+}

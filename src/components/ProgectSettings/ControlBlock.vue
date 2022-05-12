@@ -25,15 +25,18 @@
           <use xlink:href="#remove"/>
         </svg>
       </div>
-      <div class="control-block__button">
+      <div class="control-block__button" @click="turnHiddenBlock">
         <svg>
-          <use xlink:href="#hide"/>
+          <use :xlink:href="`${block.hide ? '#hide' : '#show'}`"/>
         </svg>
       </div>
-      <div class="control-block__button" @click="moveBlockUp">
+      <div
+          :class="`control-block__button ${idx === 0 ? 'disable': ''}`"
+          @click="moveBlockUp"
+      >
         <span class="arrow-up"></span>
       </div>
-      <div class="control-block__button" @click="moveBlockDown">
+      <div :class="`control-block__button ${idx === lastIdx ? 'disable': ''}`" @click="moveBlockDown">
         <span class="arrow-down"></span>
       </div>
     </div>
@@ -46,33 +49,48 @@ import routers from "@/routers";
 
 export default {
   name: "ControlBlock",
-  props: ['idBlock'],
+  props: ['block', 'idx', 'lastIdx'],
   data() {
     return {
       idPage: +routers.currentRoute.value.params.id,
+    }
+  },
+  computed: {
+    payloadData() {
+      return {idBlock: this.block.id, idPage: this.idPage}
     }
   },
   methods: {
     ...mapActions([
       'removeSelectBlock',
       'moveSelectBlock',
-      "duplicateSelectBlock"
+      'duplicateSelectBlock',
+      'turnShowBlock'
     ]),
     removeBlock() {
-      this.removeSelectBlock({idBlock: this.idBlock, idPage: this.idPage})
+      this.removeSelectBlock(this.payloadData)
     },
 
     moveBlockUp() {
-      this.moveSelectBlock({idBlock: this.idBlock, idPage: this.idPage, direction: 'up'})
+      if (this.idx > 0) {
+        this.moveSelectBlock({...this.payloadData, direction: 'up'})
+      }
     },
 
     moveBlockDown() {
-      this.moveSelectBlock({idBlock: this.idBlock, idPage: this.idPage, direction: 'down'})
+      if (this.idx < this.lastIdx) {
+        this.moveSelectBlock({...this.payloadData, direction: 'down'})
+      }
+    },
+
+    turnHiddenBlock() {
+      this.turnShowBlock(this.payloadData)
     },
 
     duplicateBlock() {
-      this.duplicateSelectBlock({idBlock: this.idBlock, idPage: this.idPage});
+      this.duplicateSelectBlock(this.payloadData);
     },
+
   }
 }
 </script>

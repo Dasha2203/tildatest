@@ -211,6 +211,7 @@ export default {
     },
   },
   mounted() {
+    window.scrollTo(0, 0)
     this.newTitle = `Page ${this.getPagesByIdProject(+routers.currentRoute.value.params.id).length + 1}`
   },
 }

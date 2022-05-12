@@ -66,8 +66,7 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(['getCategoryBlocks', "getBlocks"]),
-    ...mapActions(["addBlockToPage"]),
+    ...mapGetters(['getCategoryBlocks']),
   },
   computed: {
     categories() {
@@ -78,7 +77,10 @@ export default {
   watch: {
     selectCategory() {
       this.blocks = this.getBlocksByCategory(this.selectCategory)
-    }
+    },
+  },
+  mounted() {
+    this.selectCategory = this.categories[0].id
   }
 }
 </script>
