@@ -7,15 +7,6 @@ node_modules
 .env.local
 .env.*.local
 
-# components
-src/views/Home.vue
-src/views/EditProject.vue
-src/views/NewPageProject.vue
-src/views/ProjectSettings.vue
-src/components/ProgectSettings
-src/components/SideBar.vue
-
-
 # Log files
 npm-debug.log*
 yarn-debug.log*
