@@ -15,18 +15,21 @@
             :content="block"
             :idx="idx"
             :lastIdx="pageBlocks.length - 1"
+            :idPage="idPage"
         />
         <BlockText
             v-else-if="block.type === getBlocks[0].id"
             :content="block"
             :idx="idx"
             :lastIdx="pageBlocks.length - 1"
+            :idPage="idPage"
         />
         <BgBlockText
             v-else
             :content="block"
             :idx="idx"
             :lastIdx="pageBlocks.length - 1"
+            :idPage="idPage"
         />
       </template>
       <div class="container">
@@ -296,8 +299,6 @@ export default {
       } else {
         this.newBlock.errorTitle = 'Введите заголовок'
       }
-
-
     },
     handleChangeInputBlock(event) {
       this.newBlock[event.target.name] = event.target.value
@@ -318,6 +319,7 @@ export default {
 
       this.selectPage.errorName = '';
       this.selectPage.errorPath = '';
+      this.openCreateBlockModal = false;
       this.changeOpenPageSettings({open: false})
     },
 

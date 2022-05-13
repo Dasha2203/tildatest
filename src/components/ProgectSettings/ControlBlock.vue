@@ -7,7 +7,7 @@
         </svg>
         Настройки
       </div>
-      <div class="control-block__button">
+      <div class="control-block__button" @click="$emit('editBlock')">
         <svg>
           <use xlink:href="#pencil"/>
         </svg>
@@ -40,6 +40,8 @@
         <span class="arrow-down"></span>
       </div>
     </div>
+
+
   </div>
 </template>
 
@@ -65,7 +67,7 @@ export default {
       'removeSelectBlock',
       'moveSelectBlock',
       'duplicateSelectBlock',
-      'turnShowBlock'
+      'turnShowBlock',
     ]),
     removeBlock() {
       this.removeSelectBlock(this.payloadData)
@@ -90,7 +92,6 @@ export default {
     duplicateBlock() {
       this.duplicateSelectBlock(this.payloadData);
     },
-
   }
 }
 </script>
