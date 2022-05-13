@@ -211,7 +211,9 @@ export default {
           path: this.selectPage.path
         })
 
-        this.closeModal();
+        this.openSettingsPageModal = false;
+        this.selectPage.errorName = '';
+        this.selectPage.errorPath = '';
       } else if (!this.selectPage.name) {
         this.selectPage.errorName = 'Введите название страницы'
       } else {
