@@ -12,7 +12,7 @@ export default {
             commit(types.SELECT_PAGE, payload)
         },
         addNewPageToProject({commit, getters}, payload) {
-            const { id, newName } = payload;
+            const {id, newName} = payload;
             const projects = getters.getAllProjects;
 
             let indexProject = projects.findIndex(i => i.id === id);
@@ -29,7 +29,7 @@ export default {
 
         removePage({commit, getters}, payload) {
             const projects = getters.getAllProjects;
-            const { idProject } = payload;
+            const {idProject} = payload;
 
             let indexProject = projects.findIndex(i => i.id === idProject);
 
@@ -53,8 +53,8 @@ export default {
             commit(types.SET_IMG_PAGE, {indexProject, indexPage, ...payload});
         },
 
-        addBlockToPage({ commit, getters }, payload) {
-            const { idPage, idBlock, title, description } = payload;
+        addBlockToPage({commit, getters}, payload) {
+            const {idPage, idBlock, title, description} = payload;
             const projects = getters.getAllProjects;
             const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
 
@@ -83,7 +83,7 @@ export default {
             if (blocks.length) {
                 let indexBlock = blocks.findIndex(block => block.id === idBlock)
 
-                if(indexBlock !== -1) {
+                if (indexBlock !== -1) {
                     let newArrBlocks = [
                         ...blocks.slice(0, indexBlock),
                         ...blocks.slice(indexBlock + 1)
@@ -104,7 +104,7 @@ export default {
             if (blocks.length) {
                 let indexBlock = blocks.findIndex(block => block.id === idBlock)
 
-                if(indexBlock !== -1) {
+                if (indexBlock !== -1) {
 
                     blocks[indexBlock].hide = !blocks[indexBlock].hide;
 
@@ -113,7 +113,7 @@ export default {
             }
         },
 
-        moveSelectBlock({commit, getters}, payload){
+        moveSelectBlock({commit, getters}, payload) {
             const {idPage, idBlock, direction} = payload;
             const projects = getters.getAllProjects;
             const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
@@ -123,7 +123,7 @@ export default {
             if (blocks.length) {
                 let indexBlock = blocks.findIndex(block => block.id === idBlock)
 
-                if(indexBlock !== -1) {
+                if (indexBlock !== -1) {
                     let saveIndex = direction === 'up' ? indexBlock - 1 : indexBlock + 1;
                     let saveBlock = blocks[saveIndex];
 
@@ -145,7 +145,7 @@ export default {
             if (blocks.length) {
                 let indexBlock = blocks.findIndex(block => block.id === idBlock)
 
-                if(indexBlock !== -1) {
+                if (indexBlock !== -1) {
                     let duplicateBlock = {...blocks[indexBlock], id: Date.now()};
                     let newArrBlocks = [
                         ...blocks.slice(0, indexBlock + 1),
@@ -158,15 +158,38 @@ export default {
             }
         },
 
-        changeOpenPageSettings({commit},payload) {
+        editBlockPage({commit, getters}, payload) {
+            const {idPage, idBlock, title, description} = payload;
+            const projects = getters.getAllProjects;
+            const {indexProject, indexPage} = getIdxProjectPage(projects, idPage);
+
+            let blocks = [...projects[indexProject].pages[indexPage].blocks];
+
+            if (blocks.length) {
+                let indexBlock = blocks.findIndex(block => block.id === idBlock)
+
+                if (indexBlock !== -1) {
+
+                    blocks[indexBlock] = {
+                        ...blocks[indexBlock],
+                        title,
+                        description
+                    }
+
+                    commit(types.EDIT_BLOCKS_PAGE, {indexProject, indexPage, newArrBlocks: blocks})
+                }
+            }
+        },
+
+        changeOpenPageSettings({commit}, payload) {
             commit(types.CHANGE_OPEN_SETTINGS, payload)
         }
     },
     mutations: {
-        [types.CHANGE_OPEN_SETTINGS] (state, payload) {
+        [types.CHANGE_OPEN_SETTINGS](state, payload) {
             state.openSettingsPageModal = payload.open;
         },
-        [types.SELECT_PAGE] (state, payload) {
+        [types.SELECT_PAGE](state, payload) {
             state.selectPage = payload.id
         }
     },
