@@ -9,17 +9,21 @@
     />
     <div class="container">
       <div
-          class="text-block__title"
           v-if="content.title"
-      >
-        {{ content.title }}
-      </div>
+          v-text="contentBlock.title"
+          class="text-block__title"
+          contenteditable="true"
+          @blur="onEditTitle"
+          @keydown.enter="onEditTitle"
+      />
       <div
           v-if="content.description"
+          v-text="contentBlock.description"
           class="text-block__description"
-      >
-        {{ content.description }}
-      </div>
+          contenteditable="true"
+          @blur="onEditDesc"
+          @keydown.enter="onEditDesc"
+      />
     </div>
 
     <!--    Modal edit block-->
@@ -107,6 +111,16 @@ export default {
 
     handleChangeInputBlock(event) {
       this.contentBlock[event.target.name] = event.target.value
+    },
+
+    onEditTitle(e){
+      this.contentBlock.title = e.target.innerText;
+      this.editBlock();
+    },
+
+    onEditDesc(e){
+      this.contentBlock.description = e.target.innerText;
+      this.editBlock();
     },
 
     closeModal() {

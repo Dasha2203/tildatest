@@ -9,17 +9,21 @@
     />
     <div class="container">
       <div
-          class="text-block-bg__title"
           v-if="content.title"
-      >
-        {{ content.title }}
-      </div>
+          v-text="contentBlock.title"
+          class="text-block-bg__title"
+          contenteditable="true"
+          @blur="onEditTitle"
+          @keydown.enter="onEditTitle"
+      />
       <div
           v-if="content.description"
+          v-text="contentBlock.description"
           class="text-block-bg__description"
-      >
-        {{ content.description }}
-      </div>
+          contenteditable="true"
+          @blur="onEditDesc"
+          @keydown.enter="onEditDesc"
+      />
     </div>
 
     <!--    Modal edit block-->
@@ -115,6 +119,16 @@ export default {
         errorTitle: ''
       };
       this.openEditBlockModal = false;
+    },
+
+    onEditTitle(e){
+      this.contentBlock.title = e.target.innerText;
+      this.editBlock();
+    },
+
+    onEditDesc(e){
+      this.contentBlock.description = e.target.innerText;
+      this.editBlock();
     },
 
     handleChangeInputBlock(event) {
