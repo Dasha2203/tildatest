@@ -1,13 +1,13 @@
 <template>
   <div class="card-project">
-    <div class="card-project__options" @click.stop="openOptions">
+    <div class="card-project__options" @click="show = true" @blur="handleToggleOptions" tabindex="0">
       <svg>
         <use xlink:href="#options"></use>
       </svg>
       <DropDown
           :title="'Настройки сайта'"
           :listData="listOptions"
-          v-if="!!getOpenProjectOptions && getOpenProjectOptions === project.id"
+          v-if="show"
       />
     </div>
     <router-link class="card-project__link" :to="project.link">
@@ -111,11 +111,11 @@ export default {
       openChangeNameModal: false,
       inputError: '',
       newTitle: this.project.title,
+      show: false
 
     }
   },
   computed: {
-    ...mapGetters(['getOpenProjectOptions']),
     listOptions() {
       let that = this;
       return [
@@ -135,9 +135,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['removeProject', 'changeOpenProjectOptions', 'changeNameProject']),
+    ...mapActions('project',['removeProject', 'changeOpenProjectOptions', 'changeNameProject']),
     removeProjectById() {
       this.removeProject({id: this.project.id})
+    },
+    handleToggleOptions() {
+      this.show = false
     },
     openOptions() {
       this.changeOpenProjectOptions({id: this.project.id})

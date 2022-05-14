@@ -166,10 +166,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getPagesByIdProject', 'getProjectById'])
+    ...mapGetters('page', ['getPagesByIdProject']),
+    ...mapGetters('project', ['getProjectById']),
   },
   methods: {
-    ...mapActions(['addNewPageToProject', 'removePage']),
+    ...mapActions('page', ['addNewPageToProject', 'removePage']),
 
     closeModal() {
       this.inputError = '';

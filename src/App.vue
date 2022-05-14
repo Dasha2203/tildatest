@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleClick">
+  <div>
     <Header v-if="showHeader"/>
     <router-view/>
     <Symbols/>
@@ -20,18 +20,15 @@ export default {
     Header
   },
   computed: {
-    ...mapGetters(['getOpenProjectOptions', 'getOpenSettingsModal']),
+    ...mapGetters('page', ['getOpenSettingsModal']),
     showHeader() {
       return !+routers.currentRoute.value.fullPath.includes('preview')
     }
   },
   methods: {
-    ...mapActions(['changeOpenProjectOptions', 'fetchAllProjects', 'changeOpenPageSettings', 'getCategory']),
-    handleClick() {
-      if (this.getOpenProjectOptions) {
-        this.changeOpenProjectOptions(null)
-      }
-    }
+    ...mapActions(['fetchAllProjects']),
+    ...mapActions('page',['changeOpenPageSettings']),
+    ...mapActions('libraryBlocks',['getCategory']),
   },
   mounted() {
     this.getCategory();

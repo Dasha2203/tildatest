@@ -25,8 +25,5 @@ export default {
     HeaderMenu,
     Navigation
   },
-  // mounted() {
-  //   console.log('header', routers.currentRoute.value.fullPath.includes('/project/settings/page/'))
-  // }
 }
 </script>

@@ -1,6 +1,7 @@
 import * as types from "@/const/mutation-types";
 
 export default {
+    namespaced: true,
     state: {
         categoryBlocks: [],
         blocks: []

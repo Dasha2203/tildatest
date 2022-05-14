@@ -77,7 +77,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['editBlockPage']),
+    ...mapActions('page', ['editBlockPage']),
     editBlock() {
       let payloadBlock = {
         idBlock: this.content.id,
