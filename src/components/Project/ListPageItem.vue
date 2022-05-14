@@ -184,7 +184,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setSettingsPage', 'setImgPage']),
+    ...mapActions('page', ['setSettingsPage', 'setImgPage']),
     handleSelectSetting(tab) {
       this.activeSettingsTab = tab;
     },

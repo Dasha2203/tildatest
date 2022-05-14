@@ -63,7 +63,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
+    ...mapActions('page', [
       'removeSelectBlock',
       'moveSelectBlock',
       'duplicateSelectBlock',

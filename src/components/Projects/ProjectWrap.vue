@@ -97,7 +97,7 @@ export default {
   },
   components: {Input, Modal, CardProject},
   methods: {
-    ...mapActions(['addNewProject']),
+    ...mapActions('project',  ['addNewProject']),
     handleChangeTitle(event) {
       this.newTitle = event.target.value;
     },

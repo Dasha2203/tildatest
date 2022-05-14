@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   name: "SideBar",
@@ -66,13 +66,13 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(['getCategoryBlocks']),
+    ...mapGetters('libraryBlocks', ['getCategoryBlocks']),
   },
   computed: {
     categories() {
       return this.getCategoryBlocks();
     },
-    ...mapGetters(['getBlocksByCategory']),
+    ...mapGetters('libraryBlocks', ['getBlocksByCategory']),
   },
   watch: {
     selectCategory() {

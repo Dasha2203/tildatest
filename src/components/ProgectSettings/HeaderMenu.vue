@@ -26,7 +26,7 @@ export default {
   name: "HeaderMenu",
   components: {DropDown},
   computed: {
-    ... mapGetters(['getOpenProjectOptions']),
+    ... mapGetters('project',['getOpenProjectOptions']),
     listOptions() {
       let that = this;
       return [
@@ -52,7 +52,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['changeOpenProjectOptions', 'changeOpenPageSettings']),
+    ...mapActions('project', ['changeOpenProjectOptions']),
+    ...mapActions('page', ['changeOpenPageSettings']),
     openOptions() {
       this.changeOpenProjectOptions({id: +routers.currentRoute.value.params.id})
     },

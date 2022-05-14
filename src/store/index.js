@@ -16,6 +16,7 @@ export default new Vuex.Store({
     mutations: {
         [types.UPDATE_PROJECTS](state, projects) {
             state.projectsData = projects;
+            setProjectsCookie(state.projectsData);
         },
         [types.GENERATE_PROJECTS_TYPES](state, payload) {
             state.projectTypes = payload

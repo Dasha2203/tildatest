@@ -30,10 +30,11 @@ export default {
   name: "PreviewPage",
   components: {BlockText, BgBlockText},
   methods: {
-    ...mapActions(['setSelectPage'])
+    ...mapActions('page', ['setSelectPage'])
   },
   computed: {
-      ...mapGetters(['getBlocksPage', 'getBlocks']),
+      ...mapGetters('page', ['getBlocksPage']),
+    ...mapGetters('libraryBlocks', ['getBlocks']),
 
     pageBlocks() {
       return this.getBlocksPage;

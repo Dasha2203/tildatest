@@ -236,7 +236,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getPageById', 'getBlocksPage', "getBlocks", 'getOpenSettingsModal']),
+    ...mapGetters('libraryBlocks',["getBlocks"]),
+    ...mapGetters('page', ['getPageById', 'getBlocksPage', 'getOpenSettingsModal']),
     page() {
       return this.getPageById(this.idPage);
     },
@@ -265,15 +266,14 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      "getCategory",
+    ...mapActions('page', [
       "addBlockToPage",
       'setSettingsPage',
       'setImgPage',
       'changeOpenPageSettings',
       'setSelectPage'
     ]),
-    ...mapGetters(['getCategoryBlocks']),
+    ...mapGetters('libraryBlocks', ['getCategoryBlocks']),
     setOpenCreateBlockModal(block) {
       this.selectBlock = block;
       this.openCreateBlockModal = true;
